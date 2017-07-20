@@ -118,6 +118,14 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Df5-8h-pVb">
+                                <rect key="frame" x="267" y="0.0" width="68" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="game0"/>
+                                <connections>
+                                    <segue destination="lvK-4r-PPD" kind="show" id="6zJ-nv-lGI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -127,13 +135,42 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="crc-zu-tVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="981.60000000000002" y="138.98050974512745"/>
+            <point key="canvasLocation" x="1004" y="117.39130434782609"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="0jM-g7-ptR">
+            <objects>
+                <viewController storyboardIdentifier="game0" id="lvK-4r-PPD" customClass="GameViewController" customModule="Tamagotchi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UCe-Oi-Mp7"/>
+                        <viewControllerLayoutGuide type="bottom" id="jWP-M3-Gin"/>
+                    </layoutGuides>
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="EdU-q5-o69" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X5I-to-c6Y">
+                                <rect key="frame" x="302" y="629" width="39" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Close"/>
+                                <connections>
+                                    <segue destination="4t7-GV-54R" kind="show" animates="NO" id="PoW-lQ-PpI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iHp-fR-2Dq" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1972" y="-583"/>
         </scene>
     </scenes>
     <resources>
         <image name="clean" width="256" height="256"/>
         <image name="cure" width="64" height="64"/>
         <image name="eat" width="64" height="64"/>
+        <image name="game0" width="64" height="64"/>
         <image name="if_rabbit_animal_green_61085" width="64" height="64"/>
         <image name="love" width="64" height="64"/>
         <image name="mainDefault" width="162" height="288"/>
@@ -143,4 +180,7 @@
         <image name="touchToStartDefault" width="300" height="300"/>
         <image name="wash" width="128" height="128"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="PoW-lQ-PpI"/>
+    </inferredMetricsTieBreakers>
 </document>
