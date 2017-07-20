@@ -13,6 +13,7 @@
 		CECDD31F1F20AA3200B99265 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CECDD31E1F20AA3200B99265 /* Assets.xcassets */; };
 		CECDD3221F20AA3200B99265 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CECDD3201F20AA3200B99265 /* LaunchScreen.storyboard */; };
 		CECDD32D1F20AA3200B99265 /* TamagotchiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECDD32C1F20AA3200B99265 /* TamagotchiTests.swift */; };
+		CECDD3381F20C04E00B99265 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECDD3371F20C04E00B99265 /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		CECDD3281F20AA3200B99265 /* TamagotchiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TamagotchiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CECDD32C1F20AA3200B99265 /* TamagotchiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TamagotchiTests.swift; sourceTree = "<group>"; };
 		CECDD32E1F20AA3200B99265 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CECDD3371F20C04E00B99265 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			children = (
 				CECDD3171F20AA3200B99265 /* AppDelegate.swift */,
 				CECDD3191F20AA3200B99265 /* ViewController.swift */,
+				CECDD3371F20C04E00B99265 /* HomeViewController.swift */,
 				CECDD31B1F20AA3200B99265 /* Main.storyboard */,
 				CECDD31E1F20AA3200B99265 /* Assets.xcassets */,
 				CECDD3201F20AA3200B99265 /* LaunchScreen.storyboard */,
@@ -202,6 +205,7 @@
 			files = (
 				CECDD31A1F20AA3200B99265 /* ViewController.swift in Sources */,
 				CECDD3181F20AA3200B99265 /* AppDelegate.swift in Sources */,
+				CECDD3381F20C04E00B99265 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
