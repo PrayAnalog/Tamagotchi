@@ -65,10 +65,6 @@
                                         <rect key="frame" x="0.0" y="400" width="375" height="84"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="eat" translatesAutoresizingMaskIntoConstraints="NO" id="Hp4-Ae-I6c">
-                                                <rect key="frame" x="8" y="10" width="64" height="64"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="1Xb-cm-M9R">
                                                 <rect key="frame" x="105" y="10" width="64" height="64"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -81,6 +77,14 @@
                                                 <rect key="frame" x="205" y="10" width="64" height="64"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tl6-Sm-xAJ">
+                                                <rect key="frame" x="8" y="10" width="64" height="64"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="eat"/>
+                                                <connections>
+                                                    <action selector="eatAction:" destination="4t7-GV-54R" eventType="touchUpInside" id="yzZ-L4-7Bm"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.86528497410000005" green="0.86528497410000005" blue="0.86528497410000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
