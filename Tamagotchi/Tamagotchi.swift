@@ -20,7 +20,6 @@ class Tamagotchi {
     public var cleanliness: Int     // 청결도 (0~100) 최대치에 가까울수록 청결함
     public var closeness: Int       // 친밀도 (0부터 시작) 무한정 높아짐
     
-    
     // 보여지지 않는 상태
     public var health: Int          // 건강 (0~100) 최대치에 가까울수록 건강함
     public var sleepiness: Int      // 졸린 정도 (0~100) 최대치에 가까울수록 졸림!!
@@ -42,6 +41,10 @@ class Tamagotchi {
         self.health = health
         self.sleepiness = sleepiness
         self.species = species
+    }
+    
+    public func getInfo() -> [String] {
+        return ["이름: " + self.name + self.gender, "나이: " + String(self.age), "배고픔: " + String(self.hunger), "청결도: " + String(self.cleanliness), "친밀도: " + String(self.closeness)]
     }
     
     public func animationStart(action: String) {
