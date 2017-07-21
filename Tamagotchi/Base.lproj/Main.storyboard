@@ -39,7 +39,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="138.98050974512745"/>
+            <point key="canvasLocation" x="94" y="117"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="EsK-Xo-Uri">
@@ -181,6 +181,6 @@
         <image name="wash" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PoW-lQ-PpI"/>
+        <segue reference="4xH-PQ-xc2"/>
     </inferredMetricsTieBreakers>
 </document>
