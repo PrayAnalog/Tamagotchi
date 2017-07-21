@@ -51,6 +51,11 @@ class Tamagotchi {
     }
     
     public func animationStart(action: String, view1: UIView, view2: UIView) {
+    public func getData() -> [String:Any] {
+        return ["name": self.name, "gender": self.gender, "age": self.age, "hunger": self.hunger, "cleanliness": self.cleanliness, "closeness": self.closeness, "health": self.health, "sleepiness": self.sleepiness, "species": self.species]
+    }
+        
+    public func animationStart(action: String) {
         self.isDoing = true
         view1.alpha = 0.6
         view2.alpha = 0.6
