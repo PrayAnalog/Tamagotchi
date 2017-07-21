@@ -42,6 +42,7 @@ class Tamagotchi {
         self.health = health
         self.sleepiness = sleepiness
         self.species = species
+        self.button.setImage(UIImage(named: self.species), for: UIControlState.normal)
         self.isDoing = false
     }
     
@@ -49,8 +50,10 @@ class Tamagotchi {
         return ["이름: " + self.name + self.gender, "나이: " + String(self.age), "배고픔: " + String(self.hunger), "청결도: " + String(self.cleanliness), "친밀도: " + String(self.closeness)]
     }
     
-    public func animationStart(action: String) {
+    public func animationStart(action: String, view1: UIView, view2: UIView) {
         self.isDoing = true
+        view1.alpha = 0.6
+        view2.alpha = 0.6
         
         var imageListArray: [UIImage] = []
         
@@ -64,8 +67,11 @@ class Tamagotchi {
         self.button.imageView?.animationRepeatCount = 3
         self.button.imageView?.startAnimating()
         
-        self.isDoing = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.8, execute: {
+            self.isDoing = false
+            view1.alpha = 1
+            view2.alpha = 1
+        })
     }
-    
     
 }

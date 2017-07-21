@@ -9,7 +9,13 @@
 import UIKit
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    @IBOutlet weak var petView: UIView! //전체 펫 View
+    
+    //전체 펫 View
+    @IBOutlet weak var petView: UIView!
+    
+    //button list view
+    @IBOutlet weak var buttonListView1: UIView!
+    @IBOutlet weak var buttonListView2: UIView!
     
     //tamacotchi buttons
     @IBOutlet weak var tamaButton1: UIButton!
@@ -17,7 +23,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tamaButton3: UIButton!
     @IBOutlet weak var tamaButton4: UIButton!
     @IBOutlet weak var tamaButton5: UIButton!
-    
     
     //status view
     @IBOutlet weak var statusView: UIView!
@@ -47,6 +52,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //initialize tamagotchi (load)
         tama1 = Tamagotchi(name: "tama", gender: "♂", button: tamaButton1)
         tama2 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton2)
+        tama3 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton3)
+
         //tama3, tama4, tama5
     }
 
@@ -58,7 +65,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     /***  Functions for click tamagotchi  ***/
-    
     @IBAction func clickTama1(_ sender: UIButton) {
         selectedTama = tama1
     }
@@ -78,32 +84,39 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     /***  Functions for Action Buttons  ***/
     @IBAction func eatAction(_ sender: UIButton) {
-        if let tama = selectedTama, !(tama.isDoing) {
+        
+        if let tama = selectedTama, !tama.isDoing {
             // have to insert status change function
             tama.hunger = tama.hunger - 10
+            if(tama.hunger < 0){
+                tama.hunger = 0
+            }
             
             // change image looks like animation
-            tama.animationStart(action: "eat")
+            tama.animationStart(action: "eat", view1: buttonListView1, view2: buttonListView2)
         }
     }
     
     @IBAction func playAction(_ sender: UIButton) {
-        if let tama = selectedTama, !(tama.isDoing) {
+        if let tama = selectedTama, (!tama.isDoing) {
             // have to insert status change function
             tama.closeness = tama.closeness + 10
         
             // change image looks like animation
-            tama.animationStart(action: "play")
+            tama.animationStart(action: "play", view1: buttonListView1, view2: buttonListView2)
         }
     }
 
     @IBAction func washAction(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
             // have to insert status change function
-            tama.cleanliness = tama.closeness + 10
+            tama.cleanliness = tama.cleanliness + 10
+            if tama.cleanliness > 100 {
+                tama.cleanliness = 100
+            }
             
             // change image looks like animation
-            tama.animationStart(action: "wash")
+            tama.animationStart(action: "wash", view1: buttonListView1, view2: buttonListView2)
         }
     }
     
@@ -117,19 +130,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let tama = selectedTama, !(tama.isDoing) {
             // have to insert status change function
             tama.sleepiness = tama.sleepiness - 10
+            if tama.sleepiness < 0 {
+                tama.sleepiness = 0
+            }
             
             // change image looks like animation
-            tama.animationStart(action: "sleep")
+            tama.animationStart(action: "sleep", view1: buttonListView1, view2: buttonListView2)
         }
     }
     
     @IBAction func cureAction(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
             // have to insert status change function
-            tama.health = tama.sleepiness + 50
+            tama.health = tama.health + 50
+            if tama.health > 100 {
+                tama.health = 100
+            }
             
             // change image looks like animation
-            tama.animationStart(action: "wash")
+            tama.animationStart(action: "wash", view1: buttonListView1, view2: buttonListView2)
         }
     }
     

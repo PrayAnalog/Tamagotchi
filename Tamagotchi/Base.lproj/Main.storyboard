@@ -149,7 +149,8 @@
                                                 <accessibility key="accessibilityConfiguration">
                                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
                                                 </accessibility>
-                                                <state key="normal" image="if_rabbit_animal_green_61085"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <state key="normal" backgroundImage="select"/>
                                                 <connections>
                                                     <action selector="clickTama1:" destination="4t7-GV-54R" eventType="touchUpInside" id="8sd-mU-86m"/>
                                                 </connections>
@@ -157,6 +158,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDP-fi-ijO">
                                                 <rect key="frame" x="141" y="137" width="52" height="52"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" red="0.98994420850810028" green="1" blue="0.96260520971834851" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="clickTama2:" destination="4t7-GV-54R" eventType="touchUpInside" id="QSy-zA-9EW"/>
                                                 </connections>
@@ -213,7 +217,7 @@
                                                                 <rect key="frame" x="0.0" y="28" width="229" height="28"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qJ1-zg-Jco" id="3jO-9G-b8R">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="229" height="28"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="229" height="27.5"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </tableViewCellContentView>
                                                                 <color key="backgroundColor" red="1" green="0.9860193988" blue="0.94078042139999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -240,7 +244,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="buttonListView1" destination="TmE-2I-o3w" id="q9k-9s-7Hj"/>
+                        <outlet property="buttonListView2" destination="1fu-Nz-Iyg" id="PDF-iB-L4s"/>
                         <outlet property="petView" destination="AbJ-Lg-Rgj" id="UHR-oH-eEW"/>
                         <outlet property="statusTableView" destination="bhZ-N9-TwS" id="2Ik-9w-gLw"/>
                         <outlet property="statusView" destination="sfy-4S-bJg" id="BA3-0G-hga"/>
@@ -289,10 +297,10 @@
         <image name="cure" width="64" height="64"/>
         <image name="eat" width="64" height="64"/>
         <image name="game0" width="64" height="64"/>
-        <image name="if_rabbit_animal_green_61085" width="64" height="64"/>
         <image name="love" width="64" height="64"/>
         <image name="mainDefault" width="162" height="288"/>
         <image name="play" width="64" height="64"/>
+        <image name="select" width="64" height="64"/>
         <image name="sleep" width="64" height="64"/>
         <image name="stat" width="64" height="64"/>
         <image name="touchToStartDefault" width="300" height="300"/>
