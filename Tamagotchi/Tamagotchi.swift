@@ -23,11 +23,12 @@ class Tamagotchi {
     // 보여지지 않는 상태
     public var health: Int          // 건강 (0~100) 최대치에 가까울수록 건강함
     public var sleepiness: Int      // 졸린 정도 (0~100) 최대치에 가까울수록 졸림!!
+    public var isDoing: Bool       // 무언가 하고있는지 (true/flase) 하고 있을 경우 다른 작업 못함
     
     // 캐릭터 종류
     public var species: String      // 캐릭터 종류(사진 정보를 위해서) ["baby"]   계속 추가해야함
     
-    init?(name: String, gender: String, button: UIButton, age: Int = 0, hunger: Int = 0, cleanliness: Int = 0, closeness: Int = 0, health: Int = 0, sleepiness: Int = 0, species: String = "baby") {
+    init?(name: String, gender: String, button: UIButton, age: Int = 0, hunger: Int = 0, cleanliness: Int = 0, closeness: Int = 0, health: Int = 0, sleepiness: Int = 0, species: String = "baby", isDoing: Bool = false) {
         if (name == "") { // 한 글자 이상
             return nil
         }
@@ -41,6 +42,7 @@ class Tamagotchi {
         self.health = health
         self.sleepiness = sleepiness
         self.species = species
+        self.isDoing = false
     }
     
     public func getInfo() -> [String] {
@@ -48,6 +50,8 @@ class Tamagotchi {
     }
     
     public func animationStart(action: String) {
+        self.isDoing = true
+        
         var imageListArray: [UIImage] = []
         
         for i in 0..<2 {
@@ -59,6 +63,8 @@ class Tamagotchi {
         self.button.imageView?.animationDuration = 1.0
         self.button.imageView?.animationRepeatCount = 3
         self.button.imageView?.startAnimating()
+        
+        self.isDoing = false
     }
     
     

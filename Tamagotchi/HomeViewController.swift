@@ -11,126 +11,163 @@ import UIKit
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var petView: UIView! //전체 펫 View
     
-    @IBOutlet weak var pet1: UIButton!
-    @IBOutlet weak var pet2: UIButton!
-    @IBOutlet weak var pet3: UIButton!
-    @IBOutlet weak var pet4: UIButton!
-    @IBOutlet weak var pet5: UIButton!
+    //tamacotchi buttons
+    @IBOutlet weak var tamaButton1: UIButton!
+    @IBOutlet weak var tamaButton2: UIButton!
+    @IBOutlet weak var tamaButton3: UIButton!
+    @IBOutlet weak var tamaButton4: UIButton!
+    @IBOutlet weak var tamaButton5: UIButton!
     
+    
+    //status view
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var statusTableView: UITableView!
+    // tamagotchi inforamtion
+    var tamaInfo: [String] = ["이름: ", "나이: ", "배고픔: ", "청결도: ", "친밀도: "]
     
+    
+    //Tamagotchi
     var tama1: Tamagotchi?
+    var tama2: Tamagotchi?
+    var tama3: Tamagotchi?
+    var tama4: Tamagotchi?
+    var tama5: Tamagotchi?
+    var selectedTama: Tamagotchi?
     
-    var tamaInfo: [String]? = ["이름: ", "나이: ", "배고픔: ", "청결도: ", "친밀도: "]  // tamagotchi inforamtion
     
+    // Do any additional setup after loading the view.
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //make status view with default information
         statusTableView.delegate = self
         statusTableView.dataSource = self
         self.statusTableView?.tableFooterView = UIView()
         
-        tama1 = Tamagotchi(name: "tama", gender: "♂", button: pet1)
-
-        // Do any additional setup after loading the view.
+        //initialize tamagotchi (load)
+        tama1 = Tamagotchi(name: "tama", gender: "♂", button: tamaButton1)
+        tama2 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton2)
+        //tama3, tama4, tama5
     }
 
+    
+    // Dispose of any resources that can be recreated.
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
+    
+    /***  Functions for click tamagotchi  ***/
+    
+    @IBAction func clickTama1(_ sender: UIButton) {
+        selectedTama = tama1
+    }
+    @IBAction func clickTama2(_ sender: UIButton) {
+        selectedTama = tama2
+    }
+    @IBAction func clickTama3(_ sender: UIButton) {
+        selectedTama = tama3
+    }
+    @IBAction func clickTama4(_ sender: UIButton) {
+        selectedTama = tama4
+    }
+    @IBAction func clickTama5(_ sender: UIButton) {
+        selectedTama = tama5
+    }
+    
+    
+    /***  Functions for Action Buttons  ***/
     @IBAction func eatAction(_ sender: UIButton) {
-        //get pet object
-        
-        // have to insert status change function
-        tama1!.hunger = tama1!.hunger - 10
-        
-        // change image looks like animation
-        tama1!.animationStart(action: "eat")
+        if let tama = selectedTama, !(tama.isDoing) {
+            // have to insert status change function
+            tama.hunger = tama.hunger - 10
+            
+            // change image looks like animation
+            tama.animationStart(action: "eat")
+        }
     }
     
     @IBAction func playAction(_ sender: UIButton) {
-        //get pet object
+        if let tama = selectedTama, !(tama.isDoing) {
+            // have to insert status change function
+            tama.closeness = tama.closeness + 10
         
-        // have to insert status change function
-        tama1!.closeness = tama1!.closeness + 10
-        
-        // change image looks like animation
-        tama1!.animationStart(action: "play")
+            // change image looks like animation
+            tama.animationStart(action: "play")
+        }
     }
 
     @IBAction func washAction(_ sender: UIButton) {
-        //get pet object
-        
-        // have to insert status change function
-        tama1!.cleanliness = tama1!.closeness + 10
-        
-        // change image looks like animation
-        tama1!.animationStart(action: "wash")
+        if let tama = selectedTama, !(tama.isDoing) {
+            // have to insert status change function
+            tama.cleanliness = tama.closeness + 10
+            
+            // change image looks like animation
+            tama.animationStart(action: "wash")
+        }
     }
     
     @IBAction func cleanAction(_ sender: UIButton) {
-        //get pet object
-        
         // have to insert status change function
         
         // change image looks like animation
     }
     
     @IBAction func sleepAction(_ sender: UIButton) {
-        //get pet object
-        
-        // have to insert status change function
-        tama1!.sleepiness = tama1!.sleepiness - 10
-        
-        // change image looks like animation
-        tama1!.animationStart(action: "sleep")
+        if let tama = selectedTama, !(tama.isDoing) {
+            // have to insert status change function
+            tama.sleepiness = tama.sleepiness - 10
+            
+            // change image looks like animation
+            tama.animationStart(action: "sleep")
+        }
     }
     
     @IBAction func cureAction(_ sender: UIButton) {
-        //get pet object
-        
-        // have to insert status change function
-        tama1!.health = tama1!.sleepiness + 50
-        
-        // change image looks like animation
-        tama1!.animationStart(action: "wash")
+        if let tama = selectedTama, !(tama.isDoing) {
+            // have to insert status change function
+            tama.health = tama.sleepiness + 50
+            
+            // change image looks like animation
+            tama.animationStart(action: "wash")
+        }
     }
     
     @IBAction func loveAction(_ sender: UIButton) {
     }
     
     @IBAction func statusView(_ sender: UIButton) {
-        //get pet object
-        
-        //view status
-        tamaInfo = tama1!.getInfo()
-        statusTableView.reloadData()
-        
-        statusView.isHidden = false
+        if let tama = selectedTama, !(tama.isDoing) {
+            //view status
+            tamaInfo = tama.getInfo()
+            statusTableView.reloadData()
+            
+            statusView.isHidden = false
+        }
     }
     
+    
+    /*** functions for status view ***/
     @IBAction func statusCloseButton(_ sender: UIButton) {
         statusView.isHidden = true
     }
     
+    //return number of rows in tableview
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tamaInfo!.count
+        return tamaInfo.count
     }
     
+    //Choose your custom row height
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return 29.0;//Choose your custom row height
+        return 29.0;
     }
     
+    //load tableview cell data
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath as IndexPath)
-        if let info = tamaInfo {
-            cell.textLabel?.font = UIFont.systemFont(ofSize: 10.0)
-            cell.textLabel?.text = info[indexPath.row]
-        }
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 10.0)
+        cell.textLabel?.text = tamaInfo[indexPath.row]
         return cell
     }
     
