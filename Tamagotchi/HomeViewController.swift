@@ -9,8 +9,15 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-
-    @IBOutlet weak var petImageView: UIImageView!
+    
+    @IBOutlet weak var petView: UIView! //전체 펫 View
+    
+    @IBOutlet weak var pet1: UIButton!
+    @IBOutlet weak var pet2: UIButton!
+    @IBOutlet weak var pet3: UIButton!
+    @IBOutlet weak var pet4: UIButton!
+    @IBOutlet weak var pet5: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,30 +30,14 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func eatAnimation() {
-        
-        let petImageNameDefault : String = "petEatAction"
-        var imageListArray: [UIImage] = []
-        
-        
-        for countValue in 0..<2 {
-            let strImageName: String = petImageNameDefault + String(countValue)
-            let image = UIImage(named: strImageName)
-            imageListArray.append(image!)
-        }
-        
-        self.petImageView.animationImages = imageListArray
-        self.petImageView.animationDuration = 1.0
-        self.petImageView.animationRepeatCount = 3
-        self.petImageView.startAnimating()
-    }
     
     @IBAction func eatAction(_ sender: UIButton) {
         // have to insert status change function
         
         
         // change image looks like animation
-        eatAnimation()
+        let newPet = Tamagotchi(name: "tama", gender: "♂", button: pet1)
+        newPet?.animationStart(action: "")
     }
 
     /*

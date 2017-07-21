@@ -12,6 +12,7 @@ class Tamagotchi {
     // 처음 정해지는 것
     private var name: String        // 이름 (1글자 이상)
     private var gender: String      // 성별 [♀ or ♂]
+    private var button: UIButton
     
     // 보여지는 상태
     public var age: Int             // 나이 (0살 시작, 알에서 태어나면 1살로 설정하자)
@@ -27,35 +28,34 @@ class Tamagotchi {
     // 캐릭터 종류
     public var species: String      // 캐릭터 종류(사진 정보를 위해서) ["baby"]   계속 추가해야함
     
-    init?(name: String, gender: String) {
+    init?(name: String, gender: String, button: UIButton, age: Int = 0, hunger: Int = 0, cleanliness: Int = 0, closeness: Int = 0, health: Int = 0, sleepiness: Int = 0, species: String = "baby") {
         if (name == "") { // 한 글자 이상
             return nil
         }
         self.name = name
         self.gender = gender
-        self.age = 0
-        self.hunger = 0
-        self.cleanliness = 0
-        self.closeness = 0
-        self.health = 0
-        self.sleepiness = 0
-        self.species = "baby"
+        self.button = button
+        self.age = age
+        self.hunger = hunger
+        self.cleanliness = cleanliness
+        self.closeness = closeness
+        self.health = health
+        self.sleepiness = sleepiness
+        self.species = species
     }
-    
     
     public func animationStart(action: String) {
         var imageListArray: [UIImage] = []
         
         for i in 0..<2 {
-            let image = UIImage(named: self.species + String(i))
+            let image = UIImage(named: self.species + action + String(i))
             imageListArray.append(image!)
         }
         
-        
-//        self.petImageView.animationImages = imageListArray
-//        self.petImageView.animationDuration = 1.0
-//        self.petImageView.animationRepeatCount = 3
-//        self.petImageView.startAnimating()
+        self.button.imageView?.animationImages = imageListArray
+        self.button.imageView?.animationDuration = 1.0
+        self.button.imageView?.animationRepeatCount = 3
+        self.button.imageView?.startAnimating()
     }
     
     
