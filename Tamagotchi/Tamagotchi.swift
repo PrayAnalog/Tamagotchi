@@ -47,11 +47,16 @@ class Tamagotchi {
     }
     
     public func getInfo() -> [String] {
-        return ["이름: " + self.name + self.gender, "나이: " + String(self.age), "배고픔: " + String(self.hunger), "청결도: " + String(self.cleanliness), "친밀도: " + String(self.closeness)]
+        return [self.name + self.gender, String(self.age), String(self.hunger), String(self.cleanliness), String(self.closeness)]
     }
     
-
-    
+    public func selectBackground(select: String) {
+        if select == "s"{
+            self.button.setBackgroundImage(UIImage(named: "select"), for: UIControlState.normal)
+        }else if select == "r"{
+            self.button.setBackgroundImage(UIImage(), for: UIControlState.normal)
+        }
+    }
 
     public func getData() -> [String:Any] {
         return ["name": self.name, "gender": self.gender, "age": self.age, "hunger": self.hunger, "cleanliness": self.cleanliness, "closeness": self.closeness, "health": self.health, "sleepiness": self.sleepiness, "species": self.species]

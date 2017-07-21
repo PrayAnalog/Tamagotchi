@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomeViewController: UIViewController {
     
     //전체 펫 View
     @IBOutlet weak var petView: UIView!
@@ -24,11 +24,25 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tamaButton4: UIButton!
     @IBOutlet weak var tamaButton5: UIButton!
     
+    //status Lables
+    @IBOutlet weak var nameT: UILabel!
+    @IBOutlet weak var ageT: UILabel!
+    @IBOutlet weak var hungerT: UILabel!
+    @IBOutlet weak var cleanlinessT: UILabel!
+    @IBOutlet weak var closenessT: UILabel!
+    var statusLabels: [UILabel]?
+    
+    @IBOutlet weak var ageP: UIProgressView!
+    @IBOutlet weak var hungerP: UIProgressView!
+    @IBOutlet weak var cleanlinessP: UIProgressView!
+    var statusProgs: [UIProgressView]?
+    
+    
     //status view
     @IBOutlet weak var statusView: UIView!
-    @IBOutlet weak var statusTableView: UITableView!
+    
     // tamagotchi inforamtion
-    var tamaInfo: [String] = ["이름: ", "나이: ", "배고픔: ", "청결도: ", "친밀도: "]
+    var tamaInfo: [String] = ["", "0", "0", "0", "0"]
     
     
     //Tamagotchi
@@ -38,6 +52,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var tama4: Tamagotchi?
     var tama5: Tamagotchi?
     var selectedTama: Tamagotchi?
+    var tamas: [Tamagotchi]?
+    
+    //Max status
+    let maxValue: Float = 100
     
     public let dataFileName: String = "Tamagotchi.json"
     
@@ -45,13 +63,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //make status view with default information
-        statusTableView.delegate = self
-        statusTableView.dataSource = self
-        self.statusTableView?.tableFooterView = UIView()
-        
         loadSampleTamagotchiData()
-        
+        statusLabels = [nameT, ageT, hungerT, cleanlinessT, closenessT]
+        statusProgs = [ageP, hungerP, cleanlinessP]
+        //필요해서 만들었어요! 고쳐주세요
+        tamas = [tama1!, tama2!, tama3!]
 //        loadTamagotchiData()
     }
     
@@ -171,19 +187,49 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     /***  Functions for click tamagotchi  ***/
     @IBAction func clickTama1(_ sender: UIButton) {
-        selectedTama = tama1
+        if let tama = tama1 {
+            selectedTama = tama
+            tamaButtonReset()
+            selectedTama!.selectBackground(select: "s")
+        }
     }
     @IBAction func clickTama2(_ sender: UIButton) {
-        selectedTama = tama2
+        if let tama = tama2 {
+            selectedTama = tama
+            tamaButtonReset()
+            selectedTama!.selectBackground(select: "s")
+        }
     }
     @IBAction func clickTama3(_ sender: UIButton) {
-        selectedTama = tama3
+        if let tama = tama3 {
+            selectedTama = tama
+            tamaButtonReset()
+            selectedTama!.selectBackground(select: "s")
+        }
     }
     @IBAction func clickTama4(_ sender: UIButton) {
-        selectedTama = tama4
+        if let tama = tama4 {
+            selectedTama = tama
+            tamaButtonReset()
+            selectedTama!.selectBackground(select: "s")
+        }
     }
     @IBAction func clickTama5(_ sender: UIButton) {
-        selectedTama = tama5
+        if let tama = tama5 {
+            selectedTama = tama
+            tamaButtonReset()
+            selectedTama!.selectBackground(select: "s")
+        }
+    }
+    
+    @IBAction func clickOffTama(_ sender: UIButton) {
+        tamaButtonReset()
+    }
+    
+    func tamaButtonReset() {
+        for i in 0..<tamas!.count {
+            tamas?[i].selectBackground(select: "r")
+        }
     }
     
     
@@ -264,8 +310,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let tama = selectedTama, !(tama.isDoing) {
             //view status
             tamaInfo = tama.getInfo()
-            statusTableView.reloadData()
-            
+            for i in 0..<tamaInfo.count{
+                statusLabels?[i].text = tamaInfo[i]
+                if (i-1 >= 0 && i-1 < 3){
+                    if let value: Int = Int(tamaInfo[i]) {
+                        statusProgs?[i-1].transform = CGAffineTransform(scaleX: 1, y: 4);
+                         statusProgs?[i-1].progress = Float(value) / maxValue
+                    }
+                }
+            }
             statusView.isHidden = false
         }
     }
@@ -274,25 +327,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     /*** functions for status view ***/
     @IBAction func statusCloseButton(_ sender: UIButton) {
         statusView.isHidden = true
-    }
-    
-    //return number of rows in tableview
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tamaInfo.count
-    }
-    
-    //Choose your custom row height
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        return 29.0;
-    }
-    
-    //load tableview cell data
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath as IndexPath)
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 10.0)
-        cell.textLabel?.text = tamaInfo[indexPath.row]
-        return cell
     }
     
     /*
