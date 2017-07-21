@@ -39,7 +39,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="138.98050974512745"/>
+            <point key="canvasLocation" x="94" y="117"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="EsK-Xo-Uri">
@@ -111,10 +111,37 @@
                                         </subviews>
                                         <color key="backgroundColor" red="0.86528497409326421" green="0.86528497409326421" blue="0.86528497409326421" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="if_rabbit_animal_green_61085" translatesAutoresizingMaskIntoConstraints="NO" id="7AM-4F-8jB">
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbJ-Lg-Rgj">
                                         <rect key="frame" x="8" y="92" width="359" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CeV-hE-RWb">
+                                                <rect key="frame" x="46" y="48" width="64" height="64"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                                </accessibility>
+                                                <state key="normal" image="if_rabbit_animal_green_61085"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDP-fi-ijO">
+                                                <rect key="frame" x="141" y="137" width="52" height="52"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQj-oX-U0k">
+                                                <rect key="frame" x="38" y="192" width="52" height="52"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ucw-dA-FpX">
+                                                <rect key="frame" x="245" y="192" width="52" height="52"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JgF-xr-xoY">
+                                                <rect key="frame" x="258" y="44" width="52" height="52"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -130,7 +157,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="petImageView" destination="7AM-4F-8jB" id="CJ7-aa-4aD"/>
+                        <outlet property="pet1" destination="CeV-hE-RWb" id="Iz1-Wf-4pr"/>
+                        <outlet property="pet2" destination="RDP-fi-ijO" id="oGP-ix-fFm"/>
+                        <outlet property="pet3" destination="XQj-oX-U0k" id="55P-Vj-yAf"/>
+                        <outlet property="pet4" destination="Ucw-dA-FpX" id="iKI-o0-OTy"/>
+                        <outlet property="pet5" destination="JgF-xr-xoY" id="E0C-GE-T7Z"/>
+                        <outlet property="petView" destination="AbJ-Lg-Rgj" id="UHR-oH-eEW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="crc-zu-tVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -181,6 +213,6 @@
         <image name="wash" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PoW-lQ-PpI"/>
+        <segue reference="4xH-PQ-xc2"/>
     </inferredMetricsTieBreakers>
 </document>
