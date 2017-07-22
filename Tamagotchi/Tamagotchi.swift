@@ -9,6 +9,9 @@
 import UIKit
 
 class Tamagotchi {
+    private let MAXVALUE = 100
+    private let MINVALUE = 0
+    
     // 처음 정해지는 것
     private var name: String        // 이름 (1글자 이상)
     private var gender: String      // 성별 [♀ or ♂]
@@ -24,11 +27,12 @@ class Tamagotchi {
     public var health: Int          // 건강 (0~100) 최대치에 가까울수록 건강함
     public var sleepiness: Int      // 졸린 정도 (0~100) 최대치에 가까울수록 졸림!!
     public var isDoing: Bool       // 무언가 하고있는지 (true/flase) 하고 있을 경우 다른 작업 못함
+    public var isSelected: Bool     // 현재 선택되었는지
     
     // 캐릭터 종류
     public var species: String      // 캐릭터 종류(사진 정보를 위해서) ["baby"]   계속 추가해야함
     
-    init?(name: String, gender: String, button: UIButton, age: Int = 0, hunger: Int = 0, cleanliness: Int = 0, closeness: Int = 0, health: Int = 0, sleepiness: Int = 0, species: String = "baby", isDoing: Bool = false) {
+    init?(name: String, gender: String, button: UIButton, age: Int = 0, hunger: Int = 0, cleanliness: Int = 0, closeness: Int = 0, health: Int = 0, sleepiness: Int = 0, species: String = "baby", isDoing: Bool = false, isSelected: Bool = false) {
         if (name == "") { // 한 글자 이상
             return nil
         }
@@ -43,17 +47,18 @@ class Tamagotchi {
         self.sleepiness = sleepiness
         self.species = species
         self.button.setImage(UIImage(named: self.species), for: UIControlState.normal)
-        self.isDoing = false
+        self.isDoing = isDoing
+        self.isSelected = isSelected
     }
     
     public func getInfo() -> [String] {
         return [self.name + self.gender, String(self.age), String(self.hunger), String(self.cleanliness), String(self.closeness)]
     }
     
-    public func selectBackground(select: String) {
-        if select == "s"{
+    public func setBackground() {
+        if self.isSelected == true {
             self.button.setBackgroundImage(UIImage(named: "select"), for: UIControlState.normal)
-        }else if select == "r"{
+        }else {
             self.button.setBackgroundImage(UIImage(), for: UIControlState.normal)
         }
     }
@@ -81,9 +86,57 @@ class Tamagotchi {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.8, execute: {
             self.isDoing = false
-            view1.alpha = 1
-            view2.alpha = 1
+            if (self.isSelected == true){
+                view1.alpha = 1
+                view2.alpha = 1
+            }
         })
     }
     
+    public func updateAge(delta: Int) {
+        self.age = self.age + delta
+    }
+    
+    public func updateHunger(delta: Int) {
+        self.hunger = self.hunger + delta
+        if self.hunger > MAXVALUE {
+            self.hunger = MAXVALUE
+        } else if self.hunger < MINVALUE {
+            self.hunger = MINVALUE
+        }
+    }
+    
+    public func updateCleanliness(delta: Int) {
+        self.cleanliness = self.cleanliness + delta
+        if self.cleanliness > MAXVALUE {
+            self.cleanliness = MAXVALUE
+        } else if self.cleanliness < MINVALUE {
+            self.cleanliness = MINVALUE
+        }
+    }
+    
+    public func updateCloseness(delta: Int) {
+        self.closeness = self.closeness + delta
+        if self.closeness < MINVALUE {
+            self.closeness = MINVALUE
+        }
+    }
+    
+    public func updateHealth(delta: Int) {
+        self.health = self.health + delta
+        if self.health > MAXVALUE {
+            self.health = MAXVALUE
+        } else if self.health < MINVALUE {
+            self.health = MINVALUE
+        }
+    }
+    
+    public func updateSleepiness(delta: Int) {
+        self.sleepiness = self.sleepiness + delta
+        if self.sleepiness > MAXVALUE {
+            self.sleepiness = MAXVALUE
+        } else if self.sleepiness < MINVALUE {
+            self.sleepiness = MINVALUE
+        }
+    }
 }
