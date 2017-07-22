@@ -107,6 +107,7 @@
 			children = (
 				CE33D10A1F20E5CF000D3886 /* Game0 */,
 				CECDD3171F20AA3200B99265 /* AppDelegate.swift */,
+				CE9240CB1F2369F7009224B7 /* MCManager.swift */,
 				CECDD3191F20AA3200B99265 /* ViewController.swift */,
 				CE2121811F21D17200162FB5 /* Tamagotchi.swift */,
 				CECDD3371F20C04E00B99265 /* HomeViewController.swift */,
@@ -114,7 +115,6 @@
 				CECDD31E1F20AA3200B99265 /* Assets.xcassets */,
 				CECDD3201F20AA3200B99265 /* LaunchScreen.storyboard */,
 				CECDD3231F20AA3200B99265 /* Info.plist */,
-				CE9240CB1F2369F7009224B7 /* MCManager.swift */,
 			);
 			path = Tamagotchi;
 			sourceTree = "<group>";

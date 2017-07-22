@@ -99,8 +99,8 @@ class GameScene: SKScene {
         }
     }
     
-    // send number to other player
-    func sendNum(_ num: Int) {
+    // send position to other player
+    func sendPosition(_ num: Int) {
         var temp = num
         let data = NSData(bytes: &temp, length: MemoryLayout<NSInteger>.size)
         do {
@@ -110,5 +110,8 @@ class GameScene: SKScene {
         }
     }
     
+    func receivePosition(_ num: Int) {
+        
+    }
     
 }

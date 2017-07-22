@@ -55,6 +55,17 @@ class MCManager: NSObject, MCSessionDelegate {
     // requires that we implement them.
     func session(_ session: MCSession, didReceive data: Data,
     fromPeer peerID: MCPeerID)  {
+        
+        let str = String(data: data, encoding: .utf8)!
+                
+        let dict: NSDictionary = [
+            "data": data,
+            "peerID": peerID
+        ]
+        
+        let notificationName = Notification.Name("MCDidReceiveDataNotification")
+        NotificationCenter.default.post(name: notificationName, object: nil, userInfo: dict as! [AnyHashable : Any])
+
         DispatchQueue.main.async() {
             let data = NSData(data: data)
             var num : NSInteger = 0
