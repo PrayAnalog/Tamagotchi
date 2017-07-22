@@ -10,6 +10,13 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    var statusTimer: Timer!
+    var dungTimer: Timer!
+    var count = 0
+    var dungImage = UIImage(named: "dung")
+    var dungList: [UIImageView] = []
+    let dungMakeTime: Float = 20
+    
     //전체 펫 View
     @IBOutlet weak var petView: UIView!
     
@@ -59,8 +66,9 @@ class HomeViewController: UIViewController {
     let maxValue: Float = 100
     
     public let dataFileName: String = "Tamagotchi.json"
+
     
-    // Do any additional setup after loading the view.
+    /*** Do any additional setup after loading the view. ***/
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,9 +76,17 @@ class HomeViewController: UIViewController {
         statusLabels = [nameT, ageT, hungerT, cleanlinessT, closenessT]
         statusProgs = [ageP, hungerP, cleanlinessP]
         //필요해서 만들었어요! 고쳐주세요
+<<<<<<< HEAD
 //        tamas = [tama1!, tama2!, tama3!]
         allTamagotchiMoveRandomly()
         
+=======
+        tamas = [tama1!, tama2!, tama3!]
+        for i in 0..<tamas!.count {
+            AutomaticStatusChange(tama: tamas![i])
+        }
+        AutomaticMakeDung()
+>>>>>>> b9026c39ac1919d738bedd91d1b3ac8844b56a01
 //        loadTamagotchiData()
         
     }
@@ -80,7 +96,10 @@ class HomeViewController: UIViewController {
         tama1 = Tamagotchi(name: "tama", gender: "♂", button: tamaButton1)
         tama2 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton2)
         tama3 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton3)
+<<<<<<< HEAD
         
+=======
+>>>>>>> b9026c39ac1919d738bedd91d1b3ac8844b56a01
         //tama3, tama4, tama5
         
         appendNotNilTamagotchiIntoTamas()
@@ -212,6 +231,38 @@ class HomeViewController: UIViewController {
     }
     
     
+
+    /***  Change status as the time passed  ***/
+    func AutomaticStatusChange (tama: Tamagotchi){
+        statusTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: {_ in
+            tama.updateAge(delta: 1)
+            tama.updateHunger(delta: 1)
+            tama.updateCleanliness(delta: -1)
+            tama.updateCloseness(delta: -1)
+        })
+    }
+    
+    func AutomaticMakeDung () {
+        dungTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(dungMakeTime / Float(tamas!.count)), repeats: true, block: {_ in
+            let randomSize = arc4random_uniform(15) + 30
+            let randomX = arc4random_uniform(300)
+            let randomY = arc4random_uniform(250)
+            
+            let dungImageView = UIImageView(frame: self.CGRectMake(CGFloat(randomX), CGFloat(randomY), CGFloat(randomSize), CGFloat(randomSize)))
+            dungImageView.image = self.dungImage!
+            dungImageView.backgroundColor = UIColor.clear
+            
+            self.dungList.append(dungImageView)
+            self.petView.addSubview(dungImageView)
+            self.petView.sendSubview(toBack: dungImageView)
+        })
+    }
+    
+    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
+        return CGRect(x: x, y: y, width: width, height: height)
+    }
+    
+    
     /***  Functions for click tamagotchi  ***/
     @IBAction func clickTama1(_ sender: UIButton) {
         if let tama = tama1 {
@@ -251,21 +302,31 @@ class HomeViewController: UIViewController {
     func clickTamaButton(tama: Tamagotchi) {
         selectedTama = tama
         tamaButtonReset()
-        selectedTama!.selectBackground(select: "s")
+        selectedTama!.isSelected = true
+        selectedTama!.setBackground()
         if tama.isDoing == false {
             buttonListView1.alpha = 1
             buttonListView2.alpha = 1
-            
+        }else {
+            buttonListView1.alpha = 0.6
+            buttonListView2.alpha = 0.6
         }
         
         selectedTama!.stopMove()
     }
     
     func tamaButtonReset() {
+<<<<<<< HEAD
         for i in 0..<tamas.count {
             tamas[i]?.selectBackground(select: "r")
+=======
+        for i in 0..<tamas!.count {
+            tamas?[i].isSelected = false
+            tamas?[i].setBackground()
+>>>>>>> b9026c39ac1919d738bedd91d1b3ac8844b56a01
         }
     }
+    
     
     
     
@@ -274,10 +335,7 @@ class HomeViewController: UIViewController {
         
         if let tama = selectedTama, !tama.isDoing {
             // have to insert status change function
-            tama.hunger = tama.hunger - 10
-            if(tama.hunger < 0){
-                tama.hunger = 0
-            }
+            tama.updateHunger(delta: -10)
             
             // change image looks like animation
             tama.animationStart(action: "eat", view1: buttonListView1, view2: buttonListView2)
@@ -287,8 +345,7 @@ class HomeViewController: UIViewController {
     @IBAction func playAction(_ sender: UIButton) {
         if let tama = selectedTama, (!tama.isDoing) {
             // have to insert status change function
-            tama.closeness = tama.closeness + 10
-        
+            tama.updateCloseness(delta: 10)
             // change image looks like animation
             tama.animationStart(action: "play", view1: buttonListView1, view2: buttonListView2)
         }
@@ -297,10 +354,7 @@ class HomeViewController: UIViewController {
     @IBAction func washAction(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
             // have to insert status change function
-            tama.cleanliness = tama.cleanliness + 10
-            if tama.cleanliness > 100 {
-                tama.cleanliness = 100
-            }
+            tama.updateCleanliness(delta: 10)
             
             // change image looks like animation
             tama.animationStart(action: "wash", view1: buttonListView1, view2: buttonListView2)
@@ -308,18 +362,15 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func cleanAction(_ sender: UIButton) {
-        // have to insert status change function
-        
-        // change image looks like animation
+        for i in 0..<dungList.count {
+            dungList[i].removeFromSuperview()
+        }
     }
     
     @IBAction func sleepAction(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
             // have to insert status change function
-            tama.sleepiness = tama.sleepiness - 10
-            if tama.sleepiness < 0 {
-                tama.sleepiness = 0
-            }
+            tama.updateSleepiness(delta: -10)
             
             // change image looks like animation
             tama.animationStart(action: "sleep", view1: buttonListView1, view2: buttonListView2)
@@ -329,10 +380,7 @@ class HomeViewController: UIViewController {
     @IBAction func cureAction(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
             // have to insert status change function
-            tama.health = tama.health + 50
-            if tama.health > 100 {
-                tama.health = 100
-            }
+            tama.updateHealth(delta: 50)
             
             // change image looks like animation
             tama.animationStart(action: "wash", view1: buttonListView1, view2: buttonListView2)
@@ -351,7 +399,7 @@ class HomeViewController: UIViewController {
                 if (i-1 >= 0 && i-1 < 3){
                     if let value: Int = Int(tamaInfo[i]) {
                         statusProgs?[i-1].transform = CGAffineTransform(scaleX: 1, y: 4);
-                         statusProgs?[i-1].progress = Float(value) / maxValue
+                        statusProgs?[i-1].progress = Float(value) / maxValue
                     }
                 }
             }
