@@ -15,6 +15,7 @@ class HomeViewController: UIViewController {
     var count = 0
     var dungImage = UIImage(named: "dung")
     var dungList: [UIImageView] = []
+    let dungMakeTime: Float = 20
     
     //전체 펫 View
     @IBOutlet weak var petView: UIView!
@@ -184,8 +185,8 @@ class HomeViewController: UIViewController {
     }
     
     func AutomaticMakeDung () {
-        dungTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: {_ in
-            let randomSize = arc4random_uniform(10) + 35
+        dungTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(dungMakeTime / Float(tamas!.count)), repeats: true, block: {_ in
+            let randomSize = arc4random_uniform(15) + 30
             let randomX = arc4random_uniform(300)
             let randomY = arc4random_uniform(250)
             

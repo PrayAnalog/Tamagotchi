@@ -46,7 +46,7 @@ class Tamagotchi {
         self.health = health
         self.sleepiness = sleepiness
         self.species = species
-        self.button.setImage(UIImage(named: self.species), for: UIControlState.normal)
+        self.button.setImage(UIImage(named: self.species + "default0"), for: UIControlState.normal)
         self.isDoing = isDoing
         self.isSelected = isSelected
     }
