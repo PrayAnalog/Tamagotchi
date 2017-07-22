@@ -201,6 +201,7 @@ class HomeViewController: UIViewController {
     
     @IBAction func clickOffTama(_ sender: UIButton) {
         tamaButtonReset()
+        selectedTama = nil
     }
     
     func tamaButtonReset() {
