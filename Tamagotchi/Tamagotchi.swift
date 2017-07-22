@@ -12,6 +12,9 @@ class Tamagotchi {
     private let MAXVALUE = 100
     private let MINVALUE = 0
     
+    private let moveInterval = 2.0
+    private let isDoingInterval = 10.0
+    
     // 처음 정해지는 것
     private var name: String        // 이름 (1글자 이상)
     private var gender: String      // 성별 [♀ or ♂]
@@ -88,7 +91,9 @@ class Tamagotchi {
         self.button.imageView?.animationRepeatCount = 3
         self.button.imageView?.startAnimating()
         
+        self.moveTimer?.invalidate()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.8, execute: {
+            self.moveTimer?.fire()
             self.isDoing = false
             if (self.isSelected == true){
                 view1.alpha = 1
@@ -102,30 +107,88 @@ class Tamagotchi {
         // moving distance
         let movement:CGFloat = 10.0
         
-        // set moving animation
-        UIView.animate(withDuration: 0, animations: { () -> Void in
-            self.button.frame.origin.x += movement
-            self.button.frame.origin.y += movement
-        })
+        // moving direction
+        let movementArray : [CGFloat] = [movement, 0, movement * -1]
+        
+        // if doing nothing
+        if !(self.isDoing) {
+            // set moving animation
+//            UIView.animate(withDuration: 0, animations: { () -> Void in
+                let xOriginMove = movementArray[Int(arc4random_uniform(UInt32(movementArray.count)))]
+                let yOriginMove = movementArray[Int(arc4random_uniform(UInt32(movementArray.count)))]
+                
+                // move in the view, not escape from the view
+                if (self.button.frame.origin.x + xOriginMove < 320) && (self.button.frame.origin.x + xOriginMove > 0) {
+                    self.button.frame.origin.x += xOriginMove
+                    
+                    // change picture look like moving animation
+                    var imageListArray: [UIImage] = []
+                    var action: String = ""
+                    if (xOriginMove > 0) {
+                        action = "moveright"
+                    } else if (xOriginMove < 0) {
+                        action = "moveleft"
+                    } else {
+                        action = "default"
+                    }
+                    
+                    imageListArray.append(UIImage(named: self.species + action + "0")!)
+                    imageListArray.append(UIImage(named: self.species + "default" + String(Int(arc4random_uniform(UInt32(2)))))!)
+                
+                    
+                    self.button.imageView?.animationImages = imageListArray
+                    self.button.imageView?.animationDuration = self.moveInterval
+                    self.button.imageView?.animationRepeatCount = 1
+                    self.button.imageView?.startAnimating()
+                    
+                }
+                if (self.button.frame.origin.y + yOriginMove < 240) && (self.button.frame.origin.y + yOriginMove > 0) {
+                    self.button.frame.origin.y += yOriginMove
+                }
+//            })
+            
+        }
     }
     
     @objc func makeItMove() {
         if (self.moveTimer == nil) && !(self.isDoing) {
-            self.moveTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(tamagotchiMoveRandomly), userInfo: nil, repeats: true)
+            self.moveTimer = Timer.scheduledTimer(timeInterval: moveInterval, target: self, selector: #selector(tamagotchiMoveRandomly), userInfo: nil, repeats: true)
         }
     }
     
     func startMove() {
-        self.moveTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(tamagotchiMoveRandomly), userInfo: nil, repeats: true)
-        self.isDoingTimer = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(makeItMove), userInfo: nil, repeats: true)
+        self.moveTimer = Timer.scheduledTimer(timeInterval: moveInterval, target: self, selector: #selector(tamagotchiMoveRandomly), userInfo: nil, repeats: true)
+        self.isDoingTimer = Timer.scheduledTimer(timeInterval: isDoingInterval, target: self, selector: #selector(makeItMove), userInfo: nil, repeats: true)
     }
     
     func stopMove() {
         self.moveTimer?.invalidate()
         self.moveTimer = nil
-        
     }
-
+    
+    
+    public func multipleTouchInteraction() {
+        if (self.isDoing) {
+            return
+        }
+        
+        var imageListArray: [UIImage] = []
+        
+        for i in 0..<2 {
+            let image = UIImage(named: self.species + "smile" + String(i))
+            imageListArray.append(image!)
+        }
+        
+        self.button.imageView?.animationImages = imageListArray
+        self.button.imageView?.animationDuration = 1.0
+        self.button.imageView?.animationRepeatCount = 2
+        self.button.imageView?.startAnimating()
+        
+        self.moveTimer?.invalidate()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5 , execute: {
+            self.moveTimer?.fire()
+        })
+    }
 
     public func updateAge(delta: Int) {
         self.age = self.age + delta
