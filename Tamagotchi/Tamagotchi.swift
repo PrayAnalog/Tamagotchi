@@ -32,15 +32,11 @@ class Tamagotchi {
     // 캐릭터 종류
     public var species: String      // 캐릭터 종류(사진 정보를 위해서) ["baby"]   계속 추가해야함
     
-<<<<<<< HEAD
     // 움직임 상태 타이머
     public var moveTimer: Timer?
     public var isDoingTimer: Timer?
     
-    init?(name: String, gender: String, button: UIButton, age: Int = 0, hunger: Int = 0, cleanliness: Int = 0, closeness: Int = 0, health: Int = 0, sleepiness: Int = 0, species: String = "baby", isDoing: Bool = false) {
-=======
     init?(name: String, gender: String, button: UIButton, age: Int = 0, hunger: Int = 0, cleanliness: Int = 0, closeness: Int = 0, health: Int = 0, sleepiness: Int = 0, species: String = "baby", isDoing: Bool = false, isSelected: Bool = false) {
->>>>>>> b9026c39ac1919d738bedd91d1b3ac8844b56a01
         if (name == "") { // 한 글자 이상
             return nil
         }
@@ -101,7 +97,7 @@ class Tamagotchi {
         })
     }
     
-<<<<<<< HEAD
+
     @objc func tamagotchiMoveRandomly() {
         // moving distance
         let movement:CGFloat = 10.0
@@ -131,7 +127,6 @@ class Tamagotchi {
     }
 
 
-=======
     public func updateAge(delta: Int) {
         self.age = self.age + delta
     }
@@ -178,5 +173,5 @@ class Tamagotchi {
             self.sleepiness = MINVALUE
         }
     }
->>>>>>> b9026c39ac1919d738bedd91d1b3ac8844b56a01
+
 }

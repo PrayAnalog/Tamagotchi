@@ -59,7 +59,6 @@ class HomeViewController: UIViewController {
     var tama4: Tamagotchi?
     var tama5: Tamagotchi?
     var selectedTama: Tamagotchi?
-    var tamas: [Tamagotchi]?
     var tamas: [Tamagotchi?] = []
     
     //Max status
@@ -76,30 +75,23 @@ class HomeViewController: UIViewController {
         statusLabels = [nameT, ageT, hungerT, cleanlinessT, closenessT]
         statusProgs = [ageP, hungerP, cleanlinessP]
         //필요해서 만들었어요! 고쳐주세요
-<<<<<<< HEAD
 //        tamas = [tama1!, tama2!, tama3!]
         allTamagotchiMoveRandomly()
-        
-=======
-        tamas = [tama1!, tama2!, tama3!]
-        for i in 0..<tamas!.count {
-            AutomaticStatusChange(tama: tamas![i])
+
+        for i in 0..<tamas.count {
+            AutomaticStatusChange(tama: tamas[i]!)
         }
         AutomaticMakeDung()
->>>>>>> b9026c39ac1919d738bedd91d1b3ac8844b56a01
 //        loadTamagotchiData()
         
     }
     
-    // load Sample Tamagotchi data
+//     load Sample Tamagotchi data
     func loadSampleTamagotchiData() {
         tama1 = Tamagotchi(name: "tama", gender: "♂", button: tamaButton1)
         tama2 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton2)
         tama3 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton3)
-<<<<<<< HEAD
-        
-=======
->>>>>>> b9026c39ac1919d738bedd91d1b3ac8844b56a01
+
         //tama3, tama4, tama5
         
         appendNotNilTamagotchiIntoTamas()
@@ -243,7 +235,7 @@ class HomeViewController: UIViewController {
     }
     
     func AutomaticMakeDung () {
-        dungTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(dungMakeTime / Float(tamas!.count)), repeats: true, block: {_ in
+        dungTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(dungMakeTime / Float(tamas.count)), repeats: true, block: {_ in
             let randomSize = arc4random_uniform(15) + 30
             let randomX = arc4random_uniform(300)
             let randomY = arc4random_uniform(250)
@@ -316,14 +308,11 @@ class HomeViewController: UIViewController {
     }
     
     func tamaButtonReset() {
-<<<<<<< HEAD
+            
         for i in 0..<tamas.count {
-            tamas[i]?.selectBackground(select: "r")
-=======
-        for i in 0..<tamas!.count {
-            tamas?[i].isSelected = false
-            tamas?[i].setBackground()
->>>>>>> b9026c39ac1919d738bedd91d1b3ac8844b56a01
+            tamas[i]!.isSelected = false
+            tamas[i]!.setBackground()
+
         }
     }
     
