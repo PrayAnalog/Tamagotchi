@@ -101,12 +101,17 @@ class Tamagotchi {
     @objc func tamagotchiMoveRandomly() {
         // moving distance
         let movement:CGFloat = 10.0
+        let movementArray : [CGFloat] = [movement, 0, movement * -1]
         
         // set moving animation
-        UIView.animate(withDuration: 0, animations: { () -> Void in
-            self.button.frame.origin.x += movement
-            self.button.frame.origin.y += movement
-        })
+        if !(self.isDoing) {
+            UIView.animate(withDuration: 0, animations: { () -> Void in
+                let xOriginMove = movementArray[Int(arc4random_uniform(UInt32(movementArray.count)))]
+                let yOriginMove = movementArray[Int(arc4random_uniform(UInt32(movementArray.count)))]
+                self.button.frame.origin.x += xOriginMove
+                self.button.frame.origin.y += yOriginMove
+            })
+        }
     }
     
     @objc func makeItMove() {
