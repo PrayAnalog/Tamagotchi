@@ -3,6 +3,8 @@
 build/
 Tamagotchi.xcodeproj/xcuserdata/
 Tamagotchi.xcodeproj/project.xcworkspace/xcuserdata/
+xcuserdata/
+project.xcworkspace/xcuserdata/
 
 ## Various settings
 *.pbxuser
