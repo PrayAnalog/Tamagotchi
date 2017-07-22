@@ -59,7 +59,7 @@ class HomeViewController: UIViewController {
     var tama4: Tamagotchi?
     var tama5: Tamagotchi?
     var selectedTama: Tamagotchi?
-    var tamas: [Tamagotchi]?
+    var tamas: [Tamagotchi?] = []
     
     //Max status
     let maxValue: Float = 100
@@ -75,23 +75,49 @@ class HomeViewController: UIViewController {
         statusLabels = [nameT, ageT, hungerT, cleanlinessT, closenessT]
         statusProgs = [ageP, hungerP, cleanlinessP]
         //필요해서 만들었어요! 고쳐주세요
-        tamas = [tama1!, tama2!, tama3!]
-        for i in 0..<tamas!.count {
-            AutomaticStatusChange(tama: tamas![i])
+//        tamas = [tama1!, tama2!, tama3!]
+        allTamagotchiMoveRandomly()
+
+        for i in 0..<tamas.count {
+            AutomaticStatusChange(tama: tamas[i]!)
         }
         AutomaticMakeDung()
 //        loadTamagotchiData()
+        
     }
     
-    
+//     load Sample Tamagotchi data
     func loadSampleTamagotchiData() {
         tama1 = Tamagotchi(name: "tama", gender: "♂", button: tamaButton1)
         tama2 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton2)
         tama3 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton3)
+
         //tama3, tama4, tama5
+        
+        appendNotNilTamagotchiIntoTamas()
     }
  
+    
+    func appendNotNilTamagotchiIntoTamas() {
+        if (tama1 != nil) {
+            tamas.append(tama1!)
+        }
+        if (tama2 != nil) {
+            tamas.append(tama2!)
+        }
+        if (tama3 != nil) {
+            tamas.append(tama3!)
+        }
+        if (tama4 != nil) {
+            tamas.append(tama4!)
+        }
+        if (tama5 != nil) {
+            tamas.append(tama5!)
+        }
+    }
 
+    
+    // save tamagotchi data into local json data file
     func saveTamagotchiData() {
         // Get the url of Persons.json in document directory
         guard let documentDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
@@ -126,6 +152,7 @@ class HomeViewController: UIViewController {
     }
     
     
+    // load tamagotchi data into local json data file
     func loadTamagotchiData() {
         // Get the url of Persons.json in document directory
         guard let documentsDirectoryUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
@@ -154,6 +181,7 @@ class HomeViewController: UIViewController {
                     tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton5, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
             }
+            
         } catch {
             print(error)
             // if first app loading, there will be not dataFile
@@ -163,9 +191,31 @@ class HomeViewController: UIViewController {
             tama1 = Tamagotchi(name: "tama", gender: "♂", button: tamaButton1)
             saveTamagotchiData()
         }
+        
+        appendNotNilTamagotchiIntoTamas()
     }
     
     
+    
+    // make all tamagotchi movement randomly
+    func allTamagotchiMoveRandomly() {
+        if (tama1 != nil) {
+            tama1!.startMove()
+        }
+        if (tama2 != nil) {
+            tama2!.startMove()
+        }
+        if (tama3 != nil) {
+            tama3!.startMove()
+        }
+        if (tama4 != nil) {
+            tama4!.startMove()
+        }
+        if (tama5 != nil) {
+            tama5!.startMove()
+        }
+
+    }
     
     // Dispose of any resources that can be recreated.
     override func didReceiveMemoryWarning() {
@@ -185,7 +235,7 @@ class HomeViewController: UIViewController {
     }
     
     func AutomaticMakeDung () {
-        dungTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(dungMakeTime / Float(tamas!.count)), repeats: true, block: {_ in
+        dungTimer = Timer.scheduledTimer(withTimeInterval: TimeInterval(dungMakeTime / Float(tamas.count)), repeats: true, block: {_ in
             let randomSize = arc4random_uniform(15) + 30
             let randomX = arc4random_uniform(300)
             let randomY = arc4random_uniform(250)
@@ -234,6 +284,10 @@ class HomeViewController: UIViewController {
     
     @IBAction func clickOffTama(_ sender: UIButton) {
         tamaButtonReset()
+        if (selectedTama != nil) {
+            selectedTama!.startMove()
+        }
+        
         selectedTama = nil
     }
     
@@ -249,12 +303,16 @@ class HomeViewController: UIViewController {
             buttonListView1.alpha = 0.6
             buttonListView2.alpha = 0.6
         }
+        
+        selectedTama!.stopMove()
     }
     
     func tamaButtonReset() {
-        for i in 0..<tamas!.count {
-            tamas?[i].isSelected = false
-            tamas?[i].setBackground()
+            
+        for i in 0..<tamas.count {
+            tamas[i]!.isSelected = false
+            tamas[i]!.setBackground()
+
         }
     }
     

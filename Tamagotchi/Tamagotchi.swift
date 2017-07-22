@@ -32,6 +32,10 @@ class Tamagotchi {
     // 캐릭터 종류
     public var species: String      // 캐릭터 종류(사진 정보를 위해서) ["baby"]   계속 추가해야함
     
+    // 움직임 상태 타이머
+    public var moveTimer: Timer?
+    public var isDoingTimer: Timer?
+    
     init?(name: String, gender: String, button: UIButton, age: Int = 0, hunger: Int = 0, cleanliness: Int = 0, closeness: Int = 0, health: Int = 0, sleepiness: Int = 0, species: String = "baby", isDoing: Bool = false, isSelected: Bool = false) {
         if (name == "") { // 한 글자 이상
             return nil
@@ -93,6 +97,36 @@ class Tamagotchi {
         })
     }
     
+
+    @objc func tamagotchiMoveRandomly() {
+        // moving distance
+        let movement:CGFloat = 10.0
+        
+        // set moving animation
+        UIView.animate(withDuration: 0, animations: { () -> Void in
+            self.button.frame.origin.x += movement
+            self.button.frame.origin.y += movement
+        })
+    }
+    
+    @objc func makeItMove() {
+        if (self.moveTimer == nil) && !(self.isDoing) {
+            self.moveTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(tamagotchiMoveRandomly), userInfo: nil, repeats: true)
+        }
+    }
+    
+    func startMove() {
+        self.moveTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(tamagotchiMoveRandomly), userInfo: nil, repeats: true)
+        self.isDoingTimer = Timer.scheduledTimer(timeInterval: 8.0, target: self, selector: #selector(makeItMove), userInfo: nil, repeats: true)
+    }
+    
+    func stopMove() {
+        self.moveTimer?.invalidate()
+        self.moveTimer = nil
+        
+    }
+
+
     public func updateAge(delta: Int) {
         self.age = self.age + delta
     }
@@ -139,4 +173,5 @@ class Tamagotchi {
             self.sleepiness = MINVALUE
         }
     }
+
 }
