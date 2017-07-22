@@ -90,13 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tamagotchi/HomeViewController.swift"
-            timestampString = "522394326.16583"
+            timestampString = "522394896.362199"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
-            landmarkName = "HomeViewController"
-            landmarkType = "3">
+            startingLineNumber = "335"
+            endingLineNumber = "335">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,12 +104,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tamagotchi/HomeViewController.swift"
-            timestampString = "522394410.073756"
+            timestampString = "522394896.362199"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
-            landmarkName = "sleepAction(_:)"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "cureAction(_:)"
             landmarkType = "7">
             <Locations>
                <Location

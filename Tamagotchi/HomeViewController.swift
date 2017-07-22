@@ -201,12 +201,15 @@ class HomeViewController: UIViewController {
         if tama.isDoing == false {
             buttonListView1.alpha = 1
             buttonListView2.alpha = 1
-            
+        }else {
+            buttonListView1.alpha = 0.6
+            buttonListView2.alpha = 0.6
         }
     }
     
     func tamaButtonReset() {
         for i in 0..<tamas!.count {
+            
             tamas?[i].selectBackground(select: "r")
         }
     }
