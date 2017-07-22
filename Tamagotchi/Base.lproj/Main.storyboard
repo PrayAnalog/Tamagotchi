@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -125,7 +125,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="love"/>
                                                 <connections>
-                                                    <action selector="loveAction:" destination="4t7-GV-54R" eventType="touchUpInside" id="jew-6E-qyd"/>
+                                                    <segue destination="nzT-FH-vXu" kind="show" identifier="loveSegue" id="GmS-JU-vYu"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sPX-QC-zXh">
@@ -428,6 +428,143 @@
             </objects>
             <point key="canvasLocation" x="1004" y="117.39130434782609"/>
         </scene>
+        <!--Love View Controller-->
+        <scene sceneID="079-wS-ASv">
+            <objects>
+                <viewController id="nzT-FH-vXu" customClass="LoveViewController" customModule="Tamagotchi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vh8-W6-b7S"/>
+                        <viewControllerLayoutGuide type="bottom" id="W6U-kZ-P8m"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1sC-Dp-5gf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QYJ-S0-1Em">
+                                <rect key="frame" x="0.0" y="171" width="375" height="325"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FcV-KD-oJ9">
+                                        <rect key="frame" x="19" y="106" width="120" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Select">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="selectTama:" destination="nzT-FH-vXu" eventType="touchUpInside" id="kWv-86-w39"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zU6-HF-kTa">
+                                        <rect key="frame" x="235" y="106" width="120" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="heart" translatesAutoresizingMaskIntoConstraints="NO" id="YnB-bo-mRx">
+                                        <rect key="frame" x="137" y="112" width="100" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="heartRight" translatesAutoresizingMaskIntoConstraints="NO" id="RZ7-MS-kPw">
+                                        <rect key="frame" x="235" y="83" width="41" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="heartRight" translatesAutoresizingMaskIntoConstraints="NO" id="cPX-uB-cpL">
+                                        <rect key="frame" x="201" y="195" width="36" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="heart" translatesAutoresizingMaskIntoConstraints="NO" id="d46-Yv-dpt">
+                                        <rect key="frame" x="195" y="62" width="32" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="heartLeft" translatesAutoresizingMaskIntoConstraints="NO" id="aKY-ON-y0c">
+                                        <rect key="frame" x="156" y="79" width="38" height="41"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="heartLeft" translatesAutoresizingMaskIntoConstraints="NO" id="Sc9-Im-nhI">
+                                        <rect key="frame" x="124" y="182" width="52" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="heartLeft" translatesAutoresizingMaskIntoConstraints="NO" id="okZ-1S-NmB">
+                                        <rect key="frame" x="109" y="136" width="38" height="53"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d55-mm-7jw">
+                                        <rect key="frame" x="19" y="8" width="336" height="309"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L9s-e0-J5N">
+                                                <rect key="frame" x="142" y="271" width="53" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="1" green="0.91137360310000004" blue="0.87690783419999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="select">
+                                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="selectCloseButton:" destination="nzT-FH-vXu" eventType="touchUpInside" id="0j5-ng-uf0"/>
+                                                </connections>
+                                            </button>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="yDi-gJ-d7r">
+                                                <rect key="frame" x="8" y="8" width="320" height="255"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" red="1" green="0.97501845629999995" blue="0.96793387809999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="41w-jZ-8Z3">
+                                                    <size key="itemSize" width="102" height="99"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                                <cells>
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell2" id="6XI-wY-COR" customClass="CustomCell2" customModule="Tamagotchi" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="102" height="99"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                            <rect key="frame" x="0.0" y="0.0" width="102" height="99"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y8F-NW-efB">
+                                                                    <rect key="frame" x="4" y="0.0" width="94" height="68"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDU-a4-d4f">
+                                                                    <rect key="frame" x="4" y="69" width="94" height="30"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </view>
+                                                        <connections>
+                                                            <outlet property="image" destination="y8F-NW-efB" id="TV9-Qu-fIS"/>
+                                                            <outlet property="name" destination="DDU-a4-d4f" id="GUs-ff-LTL"/>
+                                                        </connections>
+                                                    </collectionViewCell>
+                                                </cells>
+                                            </collectionView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.91137360310578008" blue="0.8769078342039005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.79810107770000005" blue="0.79594337240000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="heart1" destination="RZ7-MS-kPw" id="wxy-Dx-Sts"/>
+                        <outlet property="heart2" destination="cPX-uB-cpL" id="yWK-ja-MQK"/>
+                        <outlet property="heart3" destination="d46-Yv-dpt" id="L5B-0R-C8x"/>
+                        <outlet property="heart4" destination="aKY-ON-y0c" id="uXs-g3-aaX"/>
+                        <outlet property="heart5" destination="Sc9-Im-nhI" id="Mzh-ni-lXV"/>
+                        <outlet property="heart6" destination="okZ-1S-NmB" id="lJA-Db-g1L"/>
+                        <outlet property="selectButton" destination="FcV-KD-oJ9" id="PaV-3i-EHs"/>
+                        <outlet property="selectCollectionView" destination="yDi-gJ-d7r" id="Whv-SR-Mwg"/>
+                        <outlet property="selectView" destination="d55-mm-7jw" id="qGY-KA-T1t"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="scf-VM-U4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2104.8000000000002" y="408.84557721139436"/>
+        </scene>
         <!--Game View Controller-->
         <scene sceneID="0jM-g7-ptR">
             <objects>
@@ -462,6 +599,9 @@
         <image name="cure" width="64" height="64"/>
         <image name="eat" width="64" height="64"/>
         <image name="game0" width="64" height="64"/>
+        <image name="heart" width="120" height="117"/>
+        <image name="heartLeft" width="160" height="158"/>
+        <image name="heartRight" width="156" height="154"/>
         <image name="index" width="452" height="452"/>
         <image name="love" width="64" height="64"/>
         <image name="mainDefault" width="162" height="288"/>
