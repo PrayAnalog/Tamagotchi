@@ -19,6 +19,7 @@ class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
     var dungList: [UIImageView] = []
     let dungMakeTime: Float = 20
 
+    @IBOutlet weak var connectedFriendLabel: UILabel!
     
     @IBAction func inviteFriend(_ sender: Any) {
         appDelegate.mcManager.setupMCBrowser()
@@ -420,6 +421,7 @@ class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
     func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController)  {
         // Called when the browser view controller is dismissed (ie the Done button was tapped)
         appDelegate.mcManager.browser.dismiss(animated: true, completion: nil)
+        connectedFriendLabel.text = appDelegate.mcManager.session.connectedPeers.description
     }
     
     func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {

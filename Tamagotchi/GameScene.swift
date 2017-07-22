@@ -19,11 +19,14 @@ class GameScene: SKScene {
     var main = SKSpriteNode()
     
     var scoreLabel = SKLabelNode()
+    var friendNameLabel = SKLabelNode()
     var score = 0
     
     override func didMove(to view: SKView) {
         appDelegate = UIApplication.shared.delegate as! AppDelegate
-
+        friendNameLabel = self.childNode(withName: "friendName") as! SKLabelNode
+        friendNameLabel.text = appDelegate.mcManager.session.connectedPeers.description
+        
         scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         ball = self.childNode(withName: "ball") as! SKSpriteNode
         enemy = self.childNode(withName: "enemy") as! SKSpriteNode

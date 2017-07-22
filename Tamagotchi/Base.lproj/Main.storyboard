@@ -334,10 +334,10 @@
                                     <action selector="inviteFriend:" destination="4t7-GV-54R" eventType="touchUpInside" id="0oJ-aw-1di"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="none" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0o1-pt-N4D">
-                                <rect key="frame" x="191" y="587" width="39" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="none" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="0o1-pt-N4D">
+                                <rect key="frame" x="36" y="576" width="252" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -354,6 +354,7 @@
                         <outlet property="cleanlinessP" destination="Jw3-xL-Bse" id="wX5-yl-LHg"/>
                         <outlet property="cleanlinessT" destination="J1X-8O-lQr" id="ALl-ux-8W1"/>
                         <outlet property="closenessT" destination="0DR-mw-zZd" id="Jet-JQ-gcq"/>
+                        <outlet property="connectedFriendLabel" destination="0o1-pt-N4D" id="GhF-9t-hC0"/>
                         <outlet property="hungerP" destination="BDV-Dr-EpD" id="KzL-Jo-WOr"/>
                         <outlet property="hungerT" destination="Oph-zl-e7d" id="syA-oL-rDK"/>
                         <outlet property="nameT" destination="Q9g-s7-tW5" id="a6O-tq-uhw"/>
