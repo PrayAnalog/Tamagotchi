@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Tamagotchi/Tamagotchi.swift"
-            timestampString = "522316032.461671"
+            filePath = "Tamagotchi/HomeViewController.swift"
+            timestampString = "522406097.409984"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "animationStart(action:)"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
+            landmarkName = "tamaButtonReset()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
