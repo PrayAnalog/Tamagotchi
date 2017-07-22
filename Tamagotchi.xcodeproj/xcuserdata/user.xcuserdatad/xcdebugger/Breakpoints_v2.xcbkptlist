@@ -10,13 +10,14 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tamagotchi/HomeViewController.swift"
-            timestampString = "522406097.409984"
+            timestampString = "522405243.941698"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "358"
-            endingLineNumber = "358"
-            landmarkName = "tamaButtonReset()"
-            landmarkType = "7">
+            startingLineNumber = "368"
+            endingLineNumber = "368">
+            endingLineNumber = "368"
+            landmarkName = "HomeViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
