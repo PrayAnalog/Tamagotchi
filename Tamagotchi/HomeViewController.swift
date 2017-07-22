@@ -31,6 +31,14 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var tamaButton4: UIButton!
     @IBOutlet weak var tamaButton5: UIButton!
     
+    
+    public let touchInteractionCount: Int = 4
+    public var tamaButton1TouchCount: Int = 0
+    public var tamaButton2TouchCount: Int = 0
+    public var tamaButton3TouchCount: Int = 0
+    public var tamaButton4TouchCount: Int = 0
+    public var tamaButton5TouchCount: Int = 0
+    
     //status Lables
     @IBOutlet weak var nameT: UILabel!
     @IBOutlet weak var ageT: UILabel!
@@ -67,6 +75,39 @@ class HomeViewController: UIViewController {
     public let dataFileName: String = "Tamagotchi.json"
 
     
+    
+    // make drag function
+    func dragTama1(gesture: UIPanGestureRecognizer){
+        let loc = gesture.location(in: self.petView)
+        self.tamaButton1.center = loc
+    }
+    func dragTama2(gesture: UIPanGestureRecognizer){
+        let loc = gesture.location(in: self.petView)
+        self.tamaButton2.center = loc
+    }
+    func dragTama3(gesture: UIPanGestureRecognizer){
+        let loc = gesture.location(in: self.petView)
+        self.tamaButton3.center = loc
+    }
+    func dragTama4(gesture: UIPanGestureRecognizer){
+        let loc = gesture.location(in: self.petView)
+        self.tamaButton4.center = loc
+    }
+    func dragTama5(gesture: UIPanGestureRecognizer){
+        let loc = gesture.location(in: self.petView)
+        self.tamaButton5.center = loc
+    }
+    
+
+    func touchCountInitialize() {
+        self.tamaButton1TouchCount = 0
+        self.tamaButton2TouchCount = 0
+        self.tamaButton3TouchCount = 0
+        self.tamaButton4TouchCount = 0
+        self.tamaButton5TouchCount = 0
+    }
+    
+    
     /*** Do any additional setup after loading the view. ***/
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +125,18 @@ class HomeViewController: UIViewController {
         AutomaticMakeDung()
 //        loadTamagotchiData()
         
+
+        
+        // add move gesture
+        tamaButton1.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragTama1(gesture:))))
+        tamaButton2.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragTama2(gesture:))))
+        tamaButton3.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragTama3(gesture:))))
+        tamaButton4.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragTama4(gesture:))))
+        tamaButton5.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragTama5(gesture:))))
+        
+        
+        // every 5 seconds, intilaizing button touch count
+        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(touchCountInitialize), userInfo: nil, repeats: true)
     }
     
 //     load Sample Tamagotchi data
@@ -259,35 +312,51 @@ class HomeViewController: UIViewController {
     @IBAction func clickTama1(_ sender: UIButton) {
         if let tama = tama1 {
             clickTamaButton(tama: tama)
+            self.tamaButton1TouchCount += 1
+            if (self.tamaButton1TouchCount > touchInteractionCount) {
+                tama.multipleTouchInteraction()
+            }
         }
     }
     @IBAction func clickTama2(_ sender: UIButton) {
         if let tama = tama2 {
             clickTamaButton(tama: tama)
+            self.tamaButton2TouchCount += 1
+            if (self.tamaButton2TouchCount > touchInteractionCount) {
+                tama.multipleTouchInteraction()
+            }
         }
     }
     @IBAction func clickTama3(_ sender: UIButton) {
         if let tama = tama3 {
             clickTamaButton(tama: tama)
+            self.tamaButton3TouchCount += 1
+            if (self.tamaButton3TouchCount > touchInteractionCount) {
+                tama.multipleTouchInteraction()
+            }
         }
     }
     @IBAction func clickTama4(_ sender: UIButton) {
         if let tama = tama4 {
             clickTamaButton(tama: tama)
+            self.tamaButton4TouchCount += 1
+            if (self.tamaButton4TouchCount > touchInteractionCount) {
+                tama.multipleTouchInteraction()
+            }
         }
     }
     @IBAction func clickTama5(_ sender: UIButton) {
         if let tama = tama5 {
             clickTamaButton(tama: tama)
+            self.tamaButton5TouchCount += 1
+            if (self.tamaButton5TouchCount > touchInteractionCount) {
+                tama.multipleTouchInteraction()
+            }
         }
     }
     
     @IBAction func clickOffTama(_ sender: UIButton) {
         tamaButtonReset()
-        if (selectedTama != nil) {
-            selectedTama!.startMove()
-        }
-        
         selectedTama = nil
     }
     
@@ -303,19 +372,15 @@ class HomeViewController: UIViewController {
             buttonListView1.alpha = 0.6
             buttonListView2.alpha = 0.6
         }
-        
         selectedTama!.stopMove()
     }
     
     func tamaButtonReset() {
-            
         for i in 0..<tamas.count {
             tamas[i]!.isSelected = false
             tamas[i]!.setBackground()
-
         }
     }
-    
     
     
     
