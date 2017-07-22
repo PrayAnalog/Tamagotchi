@@ -91,9 +91,9 @@ class Tamagotchi {
         self.button.imageView?.animationRepeatCount = 3
         self.button.imageView?.startAnimating()
         
-        self.moveTimer?.invalidate()
+//        self.moveTimer?.invalidate()
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.8, execute: {
-            self.moveTimer?.fire()
+//            self.moveTimer?.fire()
             self.isDoing = false
             if (self.isSelected == true){
                 view1.alpha = 1
