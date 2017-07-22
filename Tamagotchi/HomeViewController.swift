@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     var statusTimer: Timer!
     var dungTimer: Timer!
@@ -47,14 +47,24 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var closenessT: UILabel!
     var statusLabels: [UILabel]?
     
+    //Progress bars
     @IBOutlet weak var ageP: UIProgressView!
     @IBOutlet weak var hungerP: UIProgressView!
     @IBOutlet weak var cleanlinessP: UIProgressView!
     var statusProgs: [UIProgressView]?
-    
-    
+
     //status view
     @IBOutlet weak var statusView: UIView!
+    
+    //index view
+    @IBOutlet weak var indexView: UIView!
+    @IBOutlet weak var indexCollectionView: UICollectionView!
+    var indexImage: [String] = []
+    var indexName: [String] = []
+    let itemsPerRow: CGFloat = 3
+    
+    //Index of pet
+    let tamaIndex = ["baby": false, "pet1": true, "pet2": false, "pet3": false, "pet4": true, "pet5": false, "pet6": true]
     
     // tamagotchi inforamtion
     var tamaInfo: [String] = ["", "0", "0", "0", "0"]
@@ -73,7 +83,10 @@ class HomeViewController: UIViewController {
     let maxValue: Float = 100
     
     public let dataFileName: String = "Tamagotchi.json"
-
+    
+    
+    
+    
     
     
     // make drag function
@@ -109,20 +122,29 @@ class HomeViewController: UIViewController {
     
     
     /*** Do any additional setup after loading the view. ***/
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadSampleTamagotchiData()
         statusLabels = [nameT, ageT, hungerT, cleanlinessT, closenessT]
         statusProgs = [ageP, hungerP, cleanlinessP]
-        //필요해서 만들었어요! 고쳐주세요
-//        tamas = [tama1!, tama2!, tama3!]
+        
         allTamagotchiMoveRandomly()
 
         for i in 0..<tamas.count {
             AutomaticStatusChange(tama: tamas[i]!)
         }
         AutomaticMakeDung()
+        
+        for species in tamaIndex.keys{
+            //indexImage.append(species + "gray")
+            indexImage.append("babygray")
+            indexName.append(species)
+        }
+        indexCollectionView.delegate = self
+        indexCollectionView.dataSource = self
+        
 //        loadTamagotchiData()
         
 
@@ -384,7 +406,10 @@ class HomeViewController: UIViewController {
     
     
     
+    
+    
     /***  Functions for Action Buttons  ***/
+    
     @IBAction func eatAction(_ sender: UIButton) {
         
         if let tama = selectedTama, !tama.isDoing {
@@ -444,6 +469,10 @@ class HomeViewController: UIViewController {
     @IBAction func loveAction(_ sender: UIButton) {
     }
     
+    
+    
+    
+    /*** function for status view ***/
     @IBAction func statusView(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
             //view status
@@ -462,9 +491,52 @@ class HomeViewController: UIViewController {
     }
     
     
-    /*** functions for status view ***/
+    /*** functions for index view  ***/
+    
     @IBAction func statusCloseButton(_ sender: UIButton) {
         statusView.isHidden = true
+    }
+    
+    @IBAction func indexView(_ sender: UIButton) {
+        indexImage = []
+        for species in tamaIndex.keys{
+            if tamaIndex[species] == true {
+                indexImage.append("babydefault0")
+                //indexImage.append(species+"default0")
+            }else {
+                indexImage.append("babygray")
+                //indexImage.append(species+"gray")
+            }
+        }
+        indexCollectionView.reloadData()
+        indexView.isHidden = false
+    }
+    
+    @IBAction func indexCloseButton(_ sender: UIButton) {
+        indexView.isHidden = true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tamaIndex.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CustomCell
+        cell.backgroundColor = UIColor.white
+        cell.text.text = indexName[indexPath.row]
+        cell.image.image = UIImage(named: indexImage[indexPath.row])
+        cell.image.frame = CGRectMake(10, 8, cell.frame.width - 10, cell.frame.width - 10)
+        cell.text.frame = CGRectMake(0, cell.frame.width, cell.frame.width, 15)
+        cell.text.font = UIFont.systemFont(ofSize: 10.0)
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let paddingSpace = 5 * (itemsPerRow + 1)
+        let availableWidth = indexCollectionView.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        
+        return CGSize(width: widthPerItem, height: widthPerItem + 20)
     }
     
     /*

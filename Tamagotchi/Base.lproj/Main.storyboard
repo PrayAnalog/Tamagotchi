@@ -333,6 +333,70 @@
                                     <segue destination="lvK-4r-PPD" kind="show" id="6zJ-nv-lGI"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7O-0i-efL">
+                                <rect key="frame" x="16" y="13" width="76" height="76"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="index"/>
+                                <connections>
+                                    <action selector="indexView:" destination="4t7-GV-54R" eventType="touchUpInside" id="8i2-vO-XST"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wyZ-gw-Sox">
+                                <rect key="frame" x="16" y="97" width="343" height="473"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqc-fn-LCN">
+                                        <rect key="frame" x="151" y="431" width="61" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="close">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="indexCloseButton:" destination="4t7-GV-54R" eventType="touchUpInside" id="o6u-Ap-qMf"/>
+                                        </connections>
+                                    </button>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YDZ-PC-U7n">
+                                        <rect key="frame" x="13" y="11" width="317" height="412"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DxO-jF-rN2">
+                                            <size key="itemSize" width="103" height="108"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="indexCell" reuseIdentifier="CustomCell" id="Vt2-3n-Fki" customClass="CustomCell" customModule="Tamagotchi" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="103" height="108"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="103" height="108"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3w3-ta-83A">
+                                                            <rect key="frame" x="2" y="0.0" width="99" height="88"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X3K-n4-qlC">
+                                                            <rect key="frame" x="0.0" y="87" width="103" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </view>
+                                                <connections>
+                                                    <outlet property="image" destination="3w3-ta-83A" id="ZUy-BI-fE0"/>
+                                                    <outlet property="text" destination="X3K-n4-qlC" id="JDh-Gs-BlY"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.96881997890000005" blue="0.96647737479999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -348,6 +412,8 @@
                         <outlet property="closenessT" destination="0DR-mw-zZd" id="Jet-JQ-gcq"/>
                         <outlet property="hungerP" destination="BDV-Dr-EpD" id="KzL-Jo-WOr"/>
                         <outlet property="hungerT" destination="Oph-zl-e7d" id="syA-oL-rDK"/>
+                        <outlet property="indexCollectionView" destination="YDZ-PC-U7n" id="4fq-zq-f11"/>
+                        <outlet property="indexView" destination="wyZ-gw-Sox" id="L6p-Oy-EmF"/>
                         <outlet property="nameT" destination="Q9g-s7-tW5" id="a6O-tq-uhw"/>
                         <outlet property="petView" destination="AbJ-Lg-Rgj" id="UHR-oH-eEW"/>
                         <outlet property="statusView" destination="sfy-4S-bJg" id="BA3-0G-hga"/>
@@ -396,6 +462,7 @@
         <image name="cure" width="64" height="64"/>
         <image name="eat" width="64" height="64"/>
         <image name="game0" width="64" height="64"/>
+        <image name="index" width="452" height="452"/>
         <image name="love" width="64" height="64"/>
         <image name="mainDefault" width="162" height="288"/>
         <image name="play" width="64" height="64"/>
