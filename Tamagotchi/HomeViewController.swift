@@ -188,37 +188,27 @@ class HomeViewController: UIViewController {
     /***  Functions for click tamagotchi  ***/
     @IBAction func clickTama1(_ sender: UIButton) {
         if let tama = tama1 {
-            selectedTama = tama
-            tamaButtonReset()
-            selectedTama!.selectBackground(select: "s")
+            clickTamaButton(tama: tama)
         }
     }
     @IBAction func clickTama2(_ sender: UIButton) {
         if let tama = tama2 {
-            selectedTama = tama
-            tamaButtonReset()
-            selectedTama!.selectBackground(select: "s")
+            clickTamaButton(tama: tama)
         }
     }
     @IBAction func clickTama3(_ sender: UIButton) {
         if let tama = tama3 {
-            selectedTama = tama
-            tamaButtonReset()
-            selectedTama!.selectBackground(select: "s")
+            clickTamaButton(tama: tama)
         }
     }
     @IBAction func clickTama4(_ sender: UIButton) {
         if let tama = tama4 {
-            selectedTama = tama
-            tamaButtonReset()
-            selectedTama!.selectBackground(select: "s")
+            clickTamaButton(tama: tama)
         }
     }
     @IBAction func clickTama5(_ sender: UIButton) {
         if let tama = tama5 {
-            selectedTama = tama
-            tamaButtonReset()
-            selectedTama!.selectBackground(select: "s")
+            clickTamaButton(tama: tama)
         }
     }
     
@@ -227,11 +217,23 @@ class HomeViewController: UIViewController {
         selectedTama = nil
     }
     
+    func clickTamaButton(tama: Tamagotchi) {
+        selectedTama = tama
+        tamaButtonReset()
+        selectedTama!.selectBackground(select: "s")
+        if tama.isDoing == false {
+            buttonListView1.alpha = 1
+            buttonListView2.alpha = 1
+            
+        }
+    }
+    
     func tamaButtonReset() {
         for i in 0..<tamas!.count {
             tamas?[i].selectBackground(select: "r")
         }
     }
+    
     
     
     /***  Functions for Action Buttons  ***/
