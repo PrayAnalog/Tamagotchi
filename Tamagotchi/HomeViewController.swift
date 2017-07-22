@@ -7,15 +7,24 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
-class HomeViewController: UIViewController {
-    
+class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
+    var appDelegate : AppDelegate!
+
     var statusTimer: Timer!
     var dungTimer: Timer!
     var count = 0
     var dungImage = UIImage(named: "dung")
     var dungList: [UIImageView] = []
     let dungMakeTime: Float = 20
+
+    
+    @IBAction func inviteFriend(_ sender: Any) {
+        appDelegate.mcManager.setupMCBrowser()
+        appDelegate.mcManager.browser.delegate = self
+        self.present(appDelegate.mcManager.browser, animated: true, completion: nil)
+    }
     
     //전체 펫 View
     @IBOutlet weak var petView: UIView!
@@ -71,6 +80,11 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        self.appDelegate.mcManager.setupPeerAndSessionWithDisplayName(name: UIDevice.current.name)
+        self.appDelegate.mcManager.advertiseMyself(shouldAdvertise: true)
+
         loadSampleTamagotchiData()
         statusLabels = [nameT, ageT, hungerT, cleanlinessT, closenessT]
         statusProgs = [ageP, hungerP, cleanlinessP]
@@ -402,6 +416,16 @@ class HomeViewController: UIViewController {
         statusView.isHidden = true
     }
     
+    
+    func browserViewControllerDidFinish(_ browserViewController: MCBrowserViewController)  {
+        // Called when the browser view controller is dismissed (ie the Done button was tapped)
+        appDelegate.mcManager.browser.dismiss(animated: true, completion: nil)
+    }
+    
+    func browserViewControllerWasCancelled(_ browserViewController: MCBrowserViewController) {
+        appDelegate.mcManager.browser.dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -411,5 +435,7 @@ class HomeViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
+    
 
 }

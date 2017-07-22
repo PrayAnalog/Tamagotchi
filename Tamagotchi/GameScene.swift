@@ -8,18 +8,22 @@
 
 import SpriteKit
 import GameplayKit
+import MultipeerConnectivity
 
 class GameScene: SKScene {
     
+    var appDelegate : AppDelegate!
+
     var ball = SKSpriteNode()
     var enemy = SKSpriteNode()
     var main = SKSpriteNode()
     
     var scoreLabel = SKLabelNode()
-    
     var score = 0
     
     override func didMove(to view: SKView) {
+        appDelegate = UIApplication.shared.delegate as! AppDelegate
+
         scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         ball = self.childNode(withName: "ball") as! SKSpriteNode
         enemy = self.childNode(withName: "enemy") as! SKSpriteNode
@@ -32,6 +36,7 @@ class GameScene: SKScene {
         border.restitution = 1
         
         self.physicsBody = border
+        
         startGame()
     }
     
@@ -61,14 +66,18 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            main.run(SKAction.moveTo(x: location.x, duration: 0.1))
+            if location.y < 0 {
+                main.run(SKAction.moveTo(x: location.x, duration: 0.1))
+            }
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            main.run(SKAction.moveTo(x: location.x, duration: 0.1))
+            if location.y < 0 {
+                main.run(SKAction.moveTo(x: location.x, duration: 0.1))
+            }
         }
     }
     
@@ -86,4 +95,17 @@ class GameScene: SKScene {
             addScore(playerWhoWon: main)
         }
     }
+    
+    // send number to other player
+    func sendNum(_ num: Int) {
+        var temp = num
+        let data = NSData(bytes: &temp, length: MemoryLayout<NSInteger>.size)
+        do {
+            try appDelegate.mcManager.session.send(data as Data, toPeers: appDelegate.mcManager.session.connectedPeers, with: MCSessionSendDataMode.reliable)
+        } catch {
+            print("\(error)eeeeeee")
+        }
+    }
+    
+    
 }
