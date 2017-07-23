@@ -510,6 +510,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dv5-kA-2Sd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1024.8" y="814.54272863568224"/>
+        </scene>
         <!--Love View Controller-->
         <scene sceneID="079-wS-ASv">
             <objects>
