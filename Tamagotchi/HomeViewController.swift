@@ -399,6 +399,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBAction func clickOffTama(_ sender: UIButton) {
         tamaButtonReset()
         selectedTama = nil
+        buttonListView1.alpha = 1
+        buttonListView2.alpha = 1
     }
     
     func clickTamaButton(tama: Tamagotchi) {
@@ -422,9 +424,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             tamas[i]!.setBackground()
         }
     }
-    
-    
-    
     
     
     /***  Functions for Action Buttons  ***/
@@ -506,9 +505,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    @IBAction func loveAction(_ sender: UIButton) {
-    }
-    
     
     
     
@@ -577,6 +573,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let widthPerItem = availableWidth / itemsPerRow
         
         return CGSize(width: widthPerItem, height: widthPerItem + 20)
+    }
+    
+    //send parameter to loveView
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "loveSegue") {
+            let detailVC = segue.destination as! LoveViewController
+            detailVC.tamas = tamas
+        }
     }
     
     /*

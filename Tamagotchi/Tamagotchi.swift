@@ -17,8 +17,8 @@ class Tamagotchi {
     private let isDoingInterval = 10.0
     
     // 처음 정해지는 것
-    private var name: String        // 이름 (1글자 이상)
-    private var gender: String      // 성별 [♀ or ♂]
+    public var name: String        // 이름 (1글자 이상)
+    public var gender: String      // 성별 [♀ or ♂]
     private var button: UIButton
     
     // 보여지는 상태
@@ -272,6 +272,9 @@ class Tamagotchi {
         } else if self.hunger < MINVALUE {
             self.hunger = MINVALUE
         }
+        if Float(self.hunger) > Float(MAXVALUE) * 0.7 {
+            self.health = self.health - 1
+        }
     }
     
     public func updateCleanliness(delta: Int) {
@@ -280,6 +283,9 @@ class Tamagotchi {
             self.cleanliness = MAXVALUE
         } else if self.cleanliness < MINVALUE {
             self.cleanliness = MINVALUE
+        }
+        if Float(self.cleanliness) < Float(MAXVALUE) * 0.3 {
+            self.health = self.health - 1
         }
     }
     
