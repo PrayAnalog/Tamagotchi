@@ -55,45 +55,28 @@ class MCManager: NSObject, MCSessionDelegate {
     // requires that we implement them.
     func session(_ session: MCSession, didReceive data: Data,
     fromPeer peerID: MCPeerID)  {
-        
-        let str = String(data: data, encoding: .utf8)!
-                
         let dict: NSDictionary = [
             "data": data,
             "peerID": peerID
         ]
-        
         let notificationName = Notification.Name("MCDidReceiveDataNotification")
-        NotificationCenter.default.post(name: notificationName, object: nil, userInfo: dict as! [AnyHashable : Any])
-
-        DispatchQueue.main.async() {
-            let data = NSData(data: data)
-            var num : NSInteger = 0
-            data.getBytes(&num, length: data.length)
-        }
+        NotificationCenter.default.post(name: notificationName, object: nil, userInfo: dict as? [String : Any] )
+        
     }
     
-    func session(_ session: MCSession,
-    didStartReceivingResourceWithName resourceName: String,
-    fromPeer peerID: MCPeerID, with progress: Progress)  {
-    
+    func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress)  {
     // Called when a peer starts sending a file to us
     }
     
-    func session(_ session: MCSession,
-    didFinishReceivingResourceWithName resourceName: String,
-    fromPeer peerID: MCPeerID,
-    at localURL: URL, withError error: Error?)  {
+    func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL, withError error: Error?)  {
     // Called when a file has finished transferring from another peer
     }
     
-    func session(_ session: MCSession, didReceive stream: InputStream,
-    withName streamName: String, fromPeer peerID: MCPeerID)  {
+    func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID)  {
     // Called when a peer establishes a stream with us
     }
     
-    func session(_ session: MCSession, peer peerID: MCPeerID,
-    didChange state: MCSessionState)  {
+    func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState)  {
     // Called when a connected peer changes state (for example, goes offline)
     }
     

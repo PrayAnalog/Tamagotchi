@@ -21,11 +21,15 @@ class GameScene: SKScene {
     var scoreLabel = SKLabelNode()
     var friendNameLabel = SKLabelNode()
     var score = 0
+    var first = true
     
     override func didMove(to view: SKView) {
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         friendNameLabel = self.childNode(withName: "friendName") as! SKLabelNode
-        friendNameLabel.text = appDelegate.mcManager.session.connectedPeers.description
+        
+        let notificationName = Notification.Name("MCDidReceiveDataNotification")
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceivePosition(notification:)), name: notificationName, object: nil)
+//        friendNameLabel.text = appDelegate.mcManager.session.connectedPeers.description
         
         scoreLabel = self.childNode(withName: "scoreLabel") as! SKLabelNode
         ball = self.childNode(withName: "ball") as! SKSpriteNode
@@ -39,12 +43,14 @@ class GameScene: SKScene {
         border.restitution = 1
         
         self.physicsBody = border
-        
-        startGame()
     }
     
-    func startGame() {
-        ball.physicsBody?.applyImpulse(CGVector(dx: 10, dy: 10))
+    func startGame(isFirstPlayer: Bool) {
+        if isFirstPlayer {
+            ball.physicsBody?.applyImpulse(CGVector(dx: -10, dy: -10))
+        } else {
+            ball.physicsBody?.applyImpulse(CGVector(dx: 10, dy: 10))
+        }
         score = 0
         scoreLabel.text = "\(score)"
     }
@@ -55,9 +61,7 @@ class GameScene: SKScene {
         ball.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
         if playerWhoWon == main {
             score += 1
-            ball.physicsBody?.applyImpulse(CGVector(dx: 10+score, dy: 10+score))
-            main.size.width -= 3
-            enemy.run(SKAction.moveTo(x: ball.position.x, duration: 1.0-(Double(score)/10.0)))
+            ball.physicsBody?.applyImpulse(CGVector(dx: 10, dy: 10))
         }
         else if playerWhoWon == enemy {
             ball.physicsBody?.applyImpulse(CGVector(dx: -10, dy: -10))
@@ -67,20 +71,23 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if first {
+            first = false
+            sendData(0.0)
+            startGame(isFirstPlayer: true)
+        }
         for touch in touches {
             let location = touch.location(in: self)
-            if location.y < 0 {
-                main.run(SKAction.moveTo(x: location.x, duration: 0.1))
-            }
+            main.run(SKAction.moveTo(x: location.x, duration: 0.1))
+            sendData(location.x)
         }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
-            if location.y < 0 {
-                main.run(SKAction.moveTo(x: location.x, duration: 0.1))
-            }
+            main.run(SKAction.moveTo(x: location.x, duration: 0.1))
+            sendData(location.x)
         }
     }
     
@@ -88,7 +95,11 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
         
-        enemy.run(SKAction.moveTo(x: ball.position.x, duration: 1.0))
+//        enemy.run(SKAction.moveTo(x: ball.position.x, duration: 1.0))
+        if ball.position.y <= main.position.y || ball.position.y >= enemy.position.y {
+            ball.physicsBody?.applyImpulse(CGVector(dx: 10, dy: 10))
+            main.size.width -= 1
+        }
         
         if ball.position.y <= main.position.y - 30 {
             addScore(playerWhoWon: enemy)
@@ -100,18 +111,38 @@ class GameScene: SKScene {
     }
     
     // send position to other player
-    func sendPosition(_ num: Int) {
-        var temp = num
-        let data = NSData(bytes: &temp, length: MemoryLayout<NSInteger>.size)
+    func sendData(_ position: CGFloat) {
+        let dict: NSDictionary = [
+            "type": "pong",
+            "position": position
+        ]
+        let data = NSKeyedArchiver.archivedData(withRootObject: dict)
+        print(data)
         do {
-            try appDelegate.mcManager.session.send(data as Data, toPeers: appDelegate.mcManager.session.connectedPeers, with: MCSessionSendDataMode.reliable)
+            try appDelegate.mcManager.session.send(data as Data, toPeers: appDelegate.mcManager.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
         } catch {
-            print("\(error)eeeeeee")
+            print(error)
         }
     }
     
-    func receivePosition(_ num: Int) {
-        
+    func didReceivePosition(notification: NSNotification) {
+        if let userInfo = notification.userInfo as! [String: Any]?
+        {
+            if let peerID = userInfo["peerID"] as? MCPeerID, let data = userInfo["data"] as? Data {
+                let dict = NSKeyedUnarchiver.unarchiveObject(with: data) as! NSDictionary
+                if let type = dict["type"] as? String, let position = dict["position"] as? CGFloat {
+                    if type == "pong" {
+                        if position == 0.0 {
+                            startGame(isFirstPlayer: false)
+                        } else {
+                            enemy.run(SKAction.moveTo(x: position, duration: 0))
+                        }
+                    }
+                    friendNameLabel.text = peerID.displayName
+                }
+            }
+            
+        }
     }
     
 }
