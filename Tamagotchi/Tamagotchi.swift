@@ -206,24 +206,7 @@ class Tamagotchi {
         self.isDoingTimer = nil
     }
     
-    /*
-     @objc func sleepingState() { // 자면 5초당 피로도 delta만큼 씩 증가
-         self.updateSleepiness(delta: self.sleepHealingValue)
-         if (self.sleepiness < 2) {
-             self.sleepTimer!.invalidate()
-             self.sleepTimer = nil
-             self.isDoing = false
-             self.button.imageView?.stopAnimating()
-             if (self.isSelected == true){
-                 self.buttonView1!.alpha = 1
-                 self.buttonView2!.alpha = 1
-             }
-         }
-         print(self.sleepiness)
-     }
-
-     */
-    
+  
     public func multipleTouchInteraction(touchCount: Int) -> Int {
         if (self.isDoing) {
             print(touchCount)

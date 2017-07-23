@@ -39,7 +39,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="94" y="117"/>
+            <point key="canvasLocation" x="-918" y="199"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="EsK-Xo-Uri">
@@ -426,12 +426,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="crc-zu-tVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1004" y="117.39130434782609"/>
+            <point key="canvasLocation" x="332" y="198"/>
         </scene>
         <!--List Pop Up View Controller-->
         <scene sceneID="jWl-eF-SYj">
             <objects>
-                <viewController storyboardIdentifier="eatPopUpView" id="3n8-xI-v0p" customClass="ListPopUpViewController" customModule="Tamagotchi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ListPopUpView" id="3n8-xI-v0p" customClass="ListPopUpViewController" customModule="Tamagotchi" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Msg-9H-3KF"/>
                         <viewControllerLayoutGuide type="bottom" id="SsA-DG-xtK"/>
@@ -509,7 +509,54 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dv5-kA-2Sd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1024.8" y="814.54272863568224"/>
+            <point key="canvasLocation" x="332" y="1083"/>
+        </scene>
+        <!--Notice Pop Up View Controller-->
+        <scene sceneID="9z9-Qo-YZ5">
+            <objects>
+                <viewController storyboardIdentifier="NoticePopUpView" id="YQE-wo-Rot" customClass="NoticePopUpViewController" customModule="Tamagotchi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mZh-pd-8Nu"/>
+                        <viewControllerLayoutGuide type="bottom" id="dYq-sz-KoQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ug6-uE-DwH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZLL-sl-8HV">
+                                <rect key="frame" x="64" y="208" width="247" height="251"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ROq-jh-dIM">
+                                        <rect key="frame" x="92" y="205" width="61" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="close">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closePopUp:" destination="YQE-wo-Rot" eventType="touchUpInside" id="Wwp-yq-Qwv"/>
+                                            <action selector="closePopUp:" destination="3n8-xI-v0p" eventType="touchUpInside" id="c2o-x7-hwC"/>
+                                            <action selector="indexCloseButton:" destination="4t7-GV-54R" eventType="touchUpInside" id="P4p-Q6-WJi"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eAv-sW-j7I">
+                                        <rect key="frame" x="38" y="37" width="168" height="145"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.96881997890000005" blue="0.96647737479999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="noticeAnimationImageView" destination="eAv-sW-j7I" id="KwC-Zl-G4v"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EW8-De-zZg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1108" y="1082.608695652174"/>
         </scene>
         <!--Love View Controller-->
         <scene sceneID="079-wS-ASv">
@@ -646,7 +693,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="scf-VM-U4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2104.8000000000002" y="408.84557721139436"/>
+            <point key="canvasLocation" x="1650" y="198"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="0jM-g7-ptR">
@@ -674,7 +721,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iHp-fR-2Dq" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2609" y="-470"/>
+            <point key="canvasLocation" x="1649" y="-697"/>
         </scene>
     </scenes>
     <resources>
@@ -696,6 +743,6 @@
         <image name="wash" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4xH-PQ-xc2"/>
+        <segue reference="PoW-lQ-PpI"/>
     </inferredMetricsTieBreakers>
 </document>

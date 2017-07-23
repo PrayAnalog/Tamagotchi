@@ -431,7 +431,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBAction func eatAction(_ sender: UIButton) {
         if let tama = selectedTama, !tama.isDoing {
             // popup view 선언
-            let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "eatPopUpView") as! ListPopUpViewController
+            let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListPopUpView") as! ListPopUpViewController
             
             // set PopUpView element
             popUpView.showEllement = self.foodEllement
@@ -452,7 +452,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBAction func playAction(_ sender: UIButton) {
         if let tama = selectedTama, (!tama.isDoing) {
             // popup view 선언
-            let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "eatPopUpView") as! ListPopUpViewController
+            let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListPopUpView") as! ListPopUpViewController
             
             // set PopUpView element
             popUpView.showEllement = self.playEllement
@@ -480,6 +480,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBAction func cleanAction(_ sender: UIButton) {
+        // 똥 치우기 action popup view 선언
+        let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NoticePopUpView") as! NoticePopUpViewController
+        
+        // clean animation
+        popUpView.animation = "clean"
+        
+        // appear PopUp
+        self.addChildViewController(popUpView)
+        popUpView.view.frame = self.view.frame
+        self.view.addSubview(popUpView.view)
+
+        // remove all dung image
         for i in 0..<dungList.count {
             dungList[i].removeFromSuperview()
         }
@@ -491,17 +503,45 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
                 // change image looks like animation
                 tama.animationStart(action: "sleep", view1: buttonListView1, view2: buttonListView2)
+            } else {
+                // 안졸리다는 action popup view 선언
+                let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NoticePopUpView") as! NoticePopUpViewController
+                
+                // clean animation
+                popUpView.animation = "sayno"
+                popUpView.species = tama.species
+                
+                // appear PopUp
+                self.addChildViewController(popUpView)
+                popUpView.view.frame = self.view.frame
+                self.view.addSubview(popUpView.view)
+
             }
         }
     }
     
     @IBAction func cureAction(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
-            // have to insert status change function
-            tama.updateHealth(delta: 50)
+            if (tama.health < 20) {
+                // have to insert status change function
+                tama.updateHealth(delta: 50)
+                
+                // change image looks like animation
+                tama.animationStart(action: "wash", view1: buttonListView1, view2: buttonListView2)
+            } else {
+                // 안아프다는 action popup view 선언
+                let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NoticePopUpView") as! NoticePopUpViewController
+                
+                // clean animation
+                popUpView.animation = "sayno"
+                popUpView.species = tama.species
+                
+                // appear PopUp
+                self.addChildViewController(popUpView)
+                popUpView.view.frame = self.view.frame
+                self.view.addSubview(popUpView.view)
+            }
             
-            // change image looks like animation
-            tama.animationStart(action: "wash", view1: buttonListView1, view2: buttonListView2)
         }
     }
     
