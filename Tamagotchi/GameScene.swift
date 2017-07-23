@@ -21,7 +21,7 @@ class GameScene: SKScene {
     var scoreLabel = SKLabelNode()
     var friendNameLabel = SKLabelNode()
     var score = 0
-    var first = true
+    var firstPlayer = true
     
     override func didMove(to view: SKView) {
         appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -45,11 +45,12 @@ class GameScene: SKScene {
         self.physicsBody = border
     }
     
+    
     func startGame(isFirstPlayer: Bool) {
         if isFirstPlayer {
             ball.physicsBody?.applyImpulse(CGVector(dx: -10, dy: -10))
         } else {
-            ball.physicsBody?.applyImpulse(CGVector(dx: 10, dy: 10))
+//            ball.physicsBody?.applyImpulse(CGVector(dx: 10, dy: 10))
         }
         score = 0
         scoreLabel.text = "\(score)"
@@ -71,15 +72,15 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if first {
-            first = false
-            sendData(0.0)
+        if firstPlayer {
+            firstPlayer = false
+            sendData(type: "pong", position: 0)
             startGame(isFirstPlayer: true)
         }
         for touch in touches {
             let location = touch.location(in: self)
             main.run(SKAction.moveTo(x: location.x, duration: 0.1))
-            sendData(location.x)
+            sendData(type: "main", position: location.x)
         }
     }
     
@@ -87,19 +88,22 @@ class GameScene: SKScene {
         for touch in touches {
             let location = touch.location(in: self)
             main.run(SKAction.moveTo(x: location.x, duration: 0.1))
-            sendData(location.x)
+            sendData(type: "main", position: location.x)
         }
     }
     
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
-        
-//        enemy.run(SKAction.moveTo(x: ball.position.x, duration: 1.0))
-        if ball.position.y <= main.position.y || ball.position.y >= enemy.position.y {
-            ball.physicsBody?.applyImpulse(CGVector(dx: 10, dy: 10))
-            main.size.width -= 1
+        // my area
+        if firstPlayer {
+            print("sent")
+            sendData(type: "ball", position: ball.position)
         }
+//        if ball.position.y <= main.position.y || ball.position.y >= enemy.position.y {
+//            ball.physicsBody?.applyImpulse(CGVector(dx: 10, dy: 10))
+//            main.size.width -= 1
+//        }
         
         if ball.position.y <= main.position.y - 30 {
             addScore(playerWhoWon: enemy)
@@ -111,15 +115,14 @@ class GameScene: SKScene {
     }
     
     // send position to other player
-    func sendData(_ position: CGFloat) {
+    func sendData(type: String, position: Any) {
         let dict: NSDictionary = [
-            "type": "pong",
+            "type": type,
             "position": position
         ]
         let data = NSKeyedArchiver.archivedData(withRootObject: dict)
-        print(data)
         do {
-            try appDelegate.mcManager.session.send(data as Data, toPeers: appDelegate.mcManager.session.connectedPeers, with: MCSessionSendDataMode.unreliable)
+            try appDelegate.mcManager.session.send(data as Data, toPeers: appDelegate.mcManager.session.connectedPeers, with: MCSessionSendDataMode.reliable)
         } catch {
             print(error)
         }
@@ -130,12 +133,21 @@ class GameScene: SKScene {
         {
             if let peerID = userInfo["peerID"] as? MCPeerID, let data = userInfo["data"] as? Data {
                 let dict = NSKeyedUnarchiver.unarchiveObject(with: data) as! NSDictionary
-                if let type = dict["type"] as? String, let position = dict["position"] as? CGFloat {
+                if let type = dict["type"] as? String {
                     if type == "pong" {
-                        if position == 0.0 {
-                            startGame(isFirstPlayer: false)
-                        } else {
+                        firstPlayer = false
+                        startGame(isFirstPlayer: false)
+                    }
+                    else if type == "ball" && !firstPlayer {
+                        print("received")
+                        if let position = dict["position"] as? CGPoint {
+                            ball.run(SKAction.move(to: position, duration: 0))
+                        }
+                    } else if let position = dict["position"] as? CGFloat {
+                        if type == "main" {
                             enemy.run(SKAction.moveTo(x: position, duration: 0))
+                        } else if type == "enemy" {
+                            main.run(SKAction.moveTo(x: position, duration: 0))
                         }
                     }
                     friendNameLabel.text = peerID.displayName
