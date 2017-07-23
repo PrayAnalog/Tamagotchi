@@ -57,7 +57,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P6i-K9-fx5">
+                            <view alpha="0.87" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P6i-K9-fx5">
                                 <rect key="frame" x="0.0" y="91" width="375" height="484"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -128,17 +128,17 @@
                                                     <segue destination="nzT-FH-vXu" kind="show" identifier="loveSegue" id="GmS-JU-vYu"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sPX-QC-zXh">
-                                                <rect key="frame" x="303" y="9" width="64" height="64"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="stat"/>
-                                                <connections>
-                                                    <action selector="statusView:" destination="4t7-GV-54R" eventType="touchUpInside" id="nd2-d9-Z2B"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" red="0.86528497409326421" green="0.86528497409326421" blue="0.86528497409326421" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sPX-QC-zXh">
+                                        <rect key="frame" x="303" y="8" width="64" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="stat"/>
+                                        <connections>
+                                            <action selector="statusView:" destination="4t7-GV-54R" eventType="touchUpInside" id="nd2-d9-Z2B"/>
+                                        </connections>
+                                    </button>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbJ-Lg-Rgj">
                                         <rect key="frame" x="8" y="92" width="359" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -397,6 +397,14 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.96881997890000005" blue="0.96647737479999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qn6-Ts-fC3">
+                                <rect key="frame" x="242" y="617" width="89" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Load Sample"/>
+                                <connections>
+                                    <action selector="loadSample:" destination="4t7-GV-54R" eventType="touchUpInside" id="0BB-QY-JUl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -494,7 +502,6 @@
                                         </state>
                                         <connections>
                                             <action selector="closePopUp:" destination="3n8-xI-v0p" eventType="touchUpInside" id="NMQ-fQ-vt5"/>
-                                            <action selector="indexCloseButton:" destination="4t7-GV-54R" eventType="touchUpInside" id="etx-qO-Mpu"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -505,6 +512,8 @@
                     </view>
                     <connections>
                         <outlet property="ellementTableView" destination="Kpn-bw-hjR" id="81J-hk-VGY"/>
+                        <outlet property="listPopUpView" destination="3Pu-gl-irR" id="1EQ-TV-avb"/>
+                        <outlet property="listPopUpViewCloseButton" destination="kqN-ij-l3M" id="hkg-2g-a0J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dv5-kA-2Sd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -536,8 +545,6 @@
                                         </state>
                                         <connections>
                                             <action selector="closePopUp:" destination="YQE-wo-Rot" eventType="touchUpInside" id="Wwp-yq-Qwv"/>
-                                            <action selector="closePopUp:" destination="3n8-xI-v0p" eventType="touchUpInside" id="c2o-x7-hwC"/>
-                                            <action selector="indexCloseButton:" destination="4t7-GV-54R" eventType="touchUpInside" id="P4p-Q6-WJi"/>
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eAv-sW-j7I">
@@ -552,6 +559,8 @@
                     </view>
                     <connections>
                         <outlet property="noticeAnimationImageView" destination="eAv-sW-j7I" id="KwC-Zl-G4v"/>
+                        <outlet property="noticePopUpView" destination="ZLL-sl-8HV" id="chk-sV-yWp"/>
+                        <outlet property="noticeViewCloseButton" destination="ROq-jh-dIM" id="Llp-7b-98i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EW8-De-zZg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -722,6 +731,68 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iHp-fR-2Dq" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1649" y="-697"/>
+        </scene>
+        <!--Naming Pop Up View Controller-->
+        <scene sceneID="J6t-p2-tBu">
+            <objects>
+                <viewController storyboardIdentifier="NamingPopUpView" id="CD7-WL-pfV" customClass="NamingPopUpViewController" customModule="Tamagotchi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Nu3-5V-UPk"/>
+                        <viewControllerLayoutGuide type="bottom" id="Sc9-cg-U1a"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KNK-0w-fzK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcc-qn-s0W">
+                                <rect key="frame" x="64" y="208" width="247" height="251"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zIo-QD-nwv">
+                                        <rect key="frame" x="38" y="51" width="172" height="93"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hTr-nV-FAZ">
+                                        <rect key="frame" x="92" y="205" width="61" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="결정">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="checkNameClosePopUp:" destination="CD7-WL-pfV" eventType="touchUpInside" id="EfP-zg-MqP"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="새로운 아이가 태어났어요!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NuU-Ju-eOm">
+                                        <rect key="frame" x="36" y="15" width="176" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="이름을 지어주세요" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cXJ-qG-Lll">
+                                        <rect key="frame" x="58" y="160" width="133" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.96881997890000005" blue="0.96647737479999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="namingPopUpCloseButton" destination="hTr-nV-FAZ" id="Snv-Qx-Sia"/>
+                        <outlet property="namingPopUpImageView" destination="zIo-QD-nwv" id="w0p-hr-1Nq"/>
+                        <outlet property="namingPopUpTextField" destination="cXJ-qG-Lll" id="vUh-dD-Ofj"/>
+                        <outlet property="namingPopUpView" destination="fcc-qn-s0W" id="Q5T-LQ-VPc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jwm-TU-wiQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-453.60000000000002" y="1082.608695652174"/>
         </scene>
     </scenes>
     <resources>

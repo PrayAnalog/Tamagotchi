@@ -17,6 +17,8 @@ class ListPopUpViewController: UIViewController, UITableViewDelegate, UITableVie
     public var action: String?
 
     @IBOutlet weak var ellementTableView: UITableView!
+    @IBOutlet weak var listPopUpView: UIView!
+    @IBOutlet weak var listPopUpViewCloseButton: UIButton!
     
     
     override func viewDidLoad() {
@@ -25,6 +27,9 @@ class ListPopUpViewController: UIViewController, UITableViewDelegate, UITableVie
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         ellementTableView.delegate = self
         ellementTableView.dataSource = self
+        listPopUpView.layer.cornerRadius = 15.0
+        ellementTableView.layer.cornerRadius = 15.0
+        listPopUpViewCloseButton.layer.cornerRadius = 13.0
         // Do any additional setup after loading the view.
     }
 

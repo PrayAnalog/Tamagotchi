@@ -10,7 +10,9 @@ import UIKit
 
 class NoticePopUpViewController: UIViewController {
 
+    @IBOutlet weak var noticePopUpView: UIView!
     @IBOutlet weak var noticeAnimationImageView: UIImageView!
+    @IBOutlet weak var noticeViewCloseButton: UIButton!
     public var species: String?
     public var animation: String?
     public var animationTime = 2.0
@@ -18,6 +20,8 @@ class NoticePopUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        noticePopUpView.layer.cornerRadius = 15.0
+        noticeViewCloseButton.layer.cornerRadius = 12.0
         
         var imageListArray: [UIImage] = []
         

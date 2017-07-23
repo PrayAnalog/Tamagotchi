@@ -10,6 +10,7 @@ import UIKit
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    public var saveTimer: Timer?
     var statusTimer: Timer!
     var dungTimer: Timer!
     var count = 0
@@ -17,7 +18,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var dungList: [UIImageView] = []
     let dungMakeTime: Float = 20
     
-    public var returnDataFromPopUpView : String?
+    // view boundary 넘어가는지 체크할 값
+    public let viewMaxX: CGFloat = 360.0
+    public let viewMinX: CGFloat = 0.0
+    public let viewMaxY: CGFloat = 280.0
+    public let viewMinY: CGFloat = 15.0
     
     //전체 펫 View
     @IBOutlet weak var petView: UIView!
@@ -33,8 +38,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var tamaButton4: UIButton!
     @IBOutlet weak var tamaButton5: UIButton!
     
-    
-    public let touchInteractionCount: Int = 4
+    // touch interaction을 위해 몇 번 눌렸는지 check할 값. 5초에 0으로 초기화됨
+    public let touchInteractionCount: Int = 4   // 5초 안에 몇 번 눌러야할지 설정한 값
     public var tamaButton1TouchCount: Int = 0
     public var tamaButton2TouchCount: Int = 0
     public var tamaButton3TouchCount: Int = 0
@@ -89,36 +94,44 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     //Max status
     let maxValue: Float = 100
     
+    // tamagotchi data 저장할 파일의 이름
     public let dataFileName: String = "Tamagotchi.json"
     
     
     
-    
-    
+    // check the tamagochi moved position in the view, if not make it in bound
+    func checkAndMakeInBound (position: CGPoint) -> CGPoint {
+        var loc = position
+        if (loc.x > viewMaxX) { loc.x = viewMaxX }
+        else if (loc.x < viewMinX) { loc.x = viewMinX }
+        if (loc.y > viewMaxY) { loc.y = viewMaxY }
+        else if (loc.y < viewMinY) { loc.y = viewMinY }
+        return loc
+    }
     
     // make drag function
     func dragTama1(gesture: UIPanGestureRecognizer){
         let loc = gesture.location(in: self.petView)
-        self.tamaButton1.center = loc
+        self.tamaButton1.center = checkAndMakeInBound(position: loc)
     }
     func dragTama2(gesture: UIPanGestureRecognizer){
         let loc = gesture.location(in: self.petView)
-        self.tamaButton2.center = loc
+        self.tamaButton2.center = checkAndMakeInBound(position: loc)
     }
     func dragTama3(gesture: UIPanGestureRecognizer){
         let loc = gesture.location(in: self.petView)
-        self.tamaButton3.center = loc
+        self.tamaButton3.center = checkAndMakeInBound(position: loc)
     }
     func dragTama4(gesture: UIPanGestureRecognizer){
         let loc = gesture.location(in: self.petView)
-        self.tamaButton4.center = loc
+        self.tamaButton4.center = checkAndMakeInBound(position: loc)
     }
     func dragTama5(gesture: UIPanGestureRecognizer){
         let loc = gesture.location(in: self.petView)
-        self.tamaButton5.center = loc
+        self.tamaButton5.center = checkAndMakeInBound(position: loc)
     }
     
-
+    // touch interaction을 위해서 초기화하는 함수
     func touchCountInitialize() {
         self.tamaButton1TouchCount = 0
         self.tamaButton2TouchCount = 0
@@ -129,10 +142,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     /*** Do any additional setup after loading the view. ***/
+    @IBAction func loadSample(_ sender: UIButton) {
+        tamas = []
+        self.saveTimer?.invalidate() // 자동저장 멈춤
+        loadSampleTamagotchiData()   // 샘플 다마고치 로딩
+        allTamagotchiStopMove()      // 원래 저장되어 있는 move 없앰
+        allTamagotchiMoveRandomly()  // 로딩된 다마고치 움직이게 만듬
+        for i in 0..<tamas.count {   // 각각 상태도 변하게 함
+            AutomaticStatusChange(tama: tamas[i]!)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         // load saved Tamagotchis data
 //        loadTamagotchiData()
@@ -175,19 +197,24 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         // every 5 seconds, intilaizing button touch count for touch interaction
         Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(touchCountInitialize), userInfo: nil, repeats: true)
+        
+        
+        // every 10 seconds, save the data
+        self.saveTimer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(saveTamagotchiData), userInfo: nil, repeats: true)
     }
     
 //     load Sample Tamagotchi data
     func loadSampleTamagotchiData() {
-        tama1 = Tamagotchi(name: "tama", gender: "♂", button: tamaButton1)
-        tama2 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton2)
-        tama3 = Tamagotchi(name: "tata", gender: "♀", button: tamaButton3)
+        tama1 = Tamagotchi.init(name: "tama", gender: "♂", button: tamaButton1, age: 13, hunger: 100, sleepiness: 100)
+        tama2 = Tamagotchi.init(name: "tata", gender: "♀", button: tamaButton2, age: 3, species: "baby")
+        tama3 = Tamagotchi.init(name: "mata", gender: "♀", button: tamaButton3, age: 6)
+        tama4 = Tamagotchi.init(name: "?", gender: "♀", button: tamaButton4, species: "egg", isDoing: true) // 0살짜리는 무조건 isDoing을 true로 만들어주자
+        tama5 = Tamagotchi.init(name: "atat", gender: "♀", button: tamaButton5, age: 1, species: "baby")
 
         //tama3, tama4, tama5
         
         appendNotNilTamagotchiIntoTamas()
-        tama1!.updateSleepiness(delta: 100)
-        tama1!.updateHunger(delta: 100)
+//        tama2?.species = "egg"
     }
  
     
@@ -218,6 +245,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         var tamagotchiArray: [Any] = []
         
+        tamagotchiArray.append(["Dung":dungList.count])
         if (tama1 != nil) {
             tamagotchiArray.append(tama1!.getData())
         }
@@ -258,20 +286,37 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             for item in tamagotchiArray {
                 print(item)
+                // check dung count and paint them all
+                if let dungCount = item["Dung"] {
+                    for _ in 0..<(dungCount as! Int) {
+                        let randomSize = arc4random_uniform(15) + 30
+                        let randomX = arc4random_uniform(300)
+                        let randomY = arc4random_uniform(250)
+                        
+                        let dungImageView = UIImageView(frame: self.CGRectMake(CGFloat(randomX), CGFloat(randomY), CGFloat(randomSize), CGFloat(randomSize)))
+                        dungImageView.image = self.dungImage!
+                        dungImageView.backgroundColor = UIColor.clear
+                        
+                        self.dungList.append(dungImageView)
+                        self.petView.addSubview(dungImageView)
+                        self.petView.sendSubview(toBack: dungImageView)
+                    }
+                    continue
+                }
                 if (tama1 == nil) {
                     tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton1, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
                 else if (tama2 == nil) {
-                    tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton2, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
+                    tama2 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton2, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
                 else if (tama3 == nil) {
-                    tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton3, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
+                    tama3 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton3, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
                 else if (tama4 == nil) {
-                    tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton4, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
+                    tama4 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton4, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
                 else if (tama5 == nil) {
-                    tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton5, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
+                    tama5 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton5, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
             }
             
@@ -281,7 +326,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             // so have to make a baby tama random name and gender, and save the data
             
             // have to change here
-            tama1 = Tamagotchi(name: "tama", gender: "♂", button: tamaButton1)
+            tama1 = Tamagotchi(name: "?", gender: "?", button: tamaButton1, species: "egg", isDoing: true)
             saveTamagotchiData()
         }
         
@@ -289,7 +334,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     
-    
+    // make all tamagotchi movement randomly
+    func allTamagotchiStopMove() {
+        if (tama1 != nil) {
+            tama1!.stopMove()
+        }
+        if (tama2 != nil) {
+            tama2!.stopMove()
+        }
+        if (tama3 != nil) {
+            tama3!.stopMove()
+        }
+        if (tama4 != nil) {
+            tama4!.stopMove()
+        }
+        if (tama5 != nil) {
+            tama5!.stopMove()
+        }
+        
+    }
     // make all tamagotchi movement randomly
     func allTamagotchiMoveRandomly() {
         if (tama1 != nil) {
@@ -321,6 +384,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func AutomaticStatusChange (tama: Tamagotchi){
         statusTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: {_ in
             tama.updateAge(delta: 1)
+            if (tama.age == 1) && (tama.name == "?") {
+                tama.name = "born now"
+                print("born")
+                let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NamingPopUpView") as! NamingPopUpViewController
+                
+                // set PopUpView element
+                popUpView.tama = tama
+                
+                // appear PopUp
+                self.addChildViewController(popUpView)
+                popUpView.view.frame = self.view.frame
+                self.view.addSubview(popUpView.view)
+
+            }
             tama.updateHunger(delta: 1)
             tama.updateCleanliness(delta: -1)
             tama.updateCloseness(delta: -1)
@@ -405,6 +482,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func clickTamaButton(tama: Tamagotchi) {
         selectedTama = tama
+        tama.printAllState()
         tamaButtonReset()
         selectedTama!.isSelected = true
         selectedTama!.setBackground()
@@ -550,7 +628,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     /*** function for status view ***/
     @IBAction func statusView(_ sender: UIButton) {
-        if let tama = selectedTama, !(tama.isDoing) {
+        if let tama = selectedTama {
             //view status
             tamaInfo = tama.getInfo()
             for i in 0..<tamaInfo.count{

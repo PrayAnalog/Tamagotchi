@@ -117,7 +117,6 @@ class Tamagotchi {
         } else { // sleep state
             self.sleepTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(sleepingState), userInfo: nil, repeats: true)
         }
-        
     }
     
     @objc func sleepingState() { // 자면 5초당 피로도 delta만큼 씩 증가
@@ -141,6 +140,21 @@ class Tamagotchi {
         
         // moving direction
         let movementArray : [CGFloat] = [movement, 0, movement * -1]
+        
+        
+        // not born, just an egg state. do not move 꿈틀대기만 하자
+        if (self.species == "egg") {
+            var imageListArray: [UIImage] = []
+            
+            imageListArray.append(UIImage(named: self.species + "default0")!)
+            imageListArray.append(UIImage(named: self.species + "default1")!)
+            
+            self.button.imageView?.animationImages = imageListArray
+            self.button.imageView?.animationDuration = self.moveInterval
+            self.button.imageView?.animationRepeatCount = 1
+            self.button.imageView?.startAnimating()
+            return
+        }
         
         // if doing nothing
         if !(self.isDoing) {
@@ -183,12 +197,20 @@ class Tamagotchi {
     }
     
     @objc func makeItMove() {
-        if (self.moveTimer == nil) && !(self.isDoing) {
+        if (self.moveTimer == nil) && (!(self.isDoing) || (self.species == "egg")) {
             self.moveTimer = Timer.scheduledTimer(timeInterval: moveInterval, target: self, selector: #selector(tamagotchiMoveRandomly), userInfo: nil, repeats: true)
         }
     }
     
     func startMove() {
+        if (self.moveTimer != nil) {
+            self.moveTimer!.invalidate()
+            self.moveTimer = nil
+        }
+        if (self.isDoingTimer != nil) {
+            self.isDoingTimer!.invalidate()
+            self.isDoingTimer = nil
+        }
         self.moveTimer = Timer.scheduledTimer(timeInterval: moveInterval, target: self, selector: #selector(tamagotchiMoveRandomly), userInfo: nil, repeats: true)
         self.isDoingTimer = Timer.scheduledTimer(timeInterval: isDoingInterval, target: self, selector: #selector(makeItMove), userInfo: nil, repeats: true)
     }
@@ -246,6 +268,19 @@ class Tamagotchi {
 
     public func updateAge(delta: Int) {
         self.age = self.age + delta
+        if (self.age == 1) { // 0살에서 1살로. 즉 알에서 태어남.
+            updateHealth(delta: 80)
+            updateHunger(delta: 100) // 많이 배고픔
+            updateCloseness(delta: 0)
+            updateCleanliness(delta: 50)
+            updateSleepiness(delta: 30)
+            self.species = "baby"
+            self.button.setImage(UIImage(named: self.species + "default0"), for: UIControlState.normal)
+            self.isDoing = false
+            self.gender = ["♀", "♂"][Int(arc4random_uniform(UInt32(2)))] // 둘 중 하나로 랜덤
+            self.name = "?"
+            
+        }
     }
     
     public func updateHunger(delta: Int) {
@@ -297,4 +332,16 @@ class Tamagotchi {
         }
     }
 
+    
+    // 디버깅용 print 함수
+    public func printAllState() {
+        print("===========================")
+        print("|" + self.name + " " + self.gender + " |나이:" + String(self.age) + " |종족: " + self.species)
+        print("---------------------------")
+        print("|배고픔: " + String(self.hunger) + " |청결도: " + String(self.cleanliness) + " |친밀도: " + String(self.closeness))
+        print("|건강함: " + String(self.health) + " |졸리냐: " + String(self.sleepiness) + " |")
+        print("|바쁘냐: " + (self.isDoing ? "Y" : "N") + " |")
+        print("===========================")
+    }
+    
 }
