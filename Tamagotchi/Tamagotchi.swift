@@ -12,6 +12,7 @@ class Tamagotchi {
     private let MAXVALUE = 100
     private let MINVALUE = 0
     
+    private let sleepHealingValue = -40   // 자면 5초당 증가할 피로도
     private let moveInterval = 2.0
     private let isDoingInterval = 10.0
     
@@ -29,7 +30,7 @@ class Tamagotchi {
     // 보여지지 않는 상태
     public var health: Int          // 건강 (0~100) 최대치에 가까울수록 건강함
     public var sleepiness: Int      // 졸린 정도 (0~100) 최대치에 가까울수록 졸림!!
-    public var isDoing: Bool       // 무언가 하고있는지 (true/flase) 하고 있을 경우 다른 작업 못함
+    public var isDoing: Bool        // 무언가 하고있는지 (true/flase) 하고 있을 경우 다른 작업 못함
     public var isSelected: Bool     // 현재 선택되었는지
     
     // 캐릭터 종류
@@ -38,6 +39,13 @@ class Tamagotchi {
     // 움직임 상태 타이머
     public var moveTimer: Timer?
     public var isDoingTimer: Timer?
+    
+    // 자는 상태 타이머
+    public var sleepTimer: Timer?
+    
+    // 함수 버튼 view
+    public var buttonView1: UIView?
+    public var buttonView2: UIView?
     
     init?(name: String, gender: String, button: UIButton, age: Int = 0, hunger: Int = 0, cleanliness: Int = 0, closeness: Int = 0, health: Int = 0, sleepiness: Int = 0, species: String = "baby", isDoing: Bool = false, isSelected: Bool = false) {
         if (name == "") { // 한 글자 이상
@@ -76,6 +84,8 @@ class Tamagotchi {
         
     public func animationStart(action: String, view1: UIView, view2: UIView) {
         self.isDoing = true
+        self.buttonView1 = view1
+        self.buttonView2 = view2
         view1.alpha = 0.6
         view2.alpha = 0.6
         
@@ -85,23 +95,45 @@ class Tamagotchi {
             let image = UIImage(named: self.species + action + String(i))
             imageListArray.append(image!)
         }
-        
         self.button.imageView?.animationImages = imageListArray
         self.button.imageView?.animationDuration = 1.0
-        self.button.imageView?.animationRepeatCount = 3
+        
+        if (action != "sleep") {
+            self.button.imageView?.animationRepeatCount = 3
+        } else {
+            self.button.imageView?.animationRepeatCount = self.sleepiness
+        }
+        
         self.button.imageView?.startAnimating()
         
-//        self.moveTimer?.invalidate()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.8, execute: {
-//            self.moveTimer?.fire()
-            self.isDoing = false
-            if (self.isSelected == true){
-                view1.alpha = 1
-                view2.alpha = 1
-            }
-        })
+        if (action != "sleep") {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.8, execute: {
+                self.isDoing = false
+                if (self.isSelected == true){
+                    view1.alpha = 1
+                    view2.alpha = 1
+                }
+            })
+        } else { // sleep state
+            self.sleepTimer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(sleepingState), userInfo: nil, repeats: true)
+        }
+        
     }
     
+    @objc func sleepingState() { // 자면 5초당 피로도 delta만큼 씩 증가
+        self.updateSleepiness(delta: self.sleepHealingValue)
+        if (self.sleepiness < 2) {
+            self.sleepTimer!.invalidate()
+            self.sleepTimer = nil
+            self.isDoing = false
+            self.button.imageView?.stopAnimating()
+            if (self.isSelected == true){
+                self.buttonView1!.alpha = 1
+                self.buttonView2!.alpha = 1
+            }
+        }
+        print(self.sleepiness)
+    }
 
     @objc func tamagotchiMoveRandomly() {
         // moving distance
@@ -161,15 +193,53 @@ class Tamagotchi {
         self.isDoingTimer = Timer.scheduledTimer(timeInterval: isDoingInterval, target: self, selector: #selector(makeItMove), userInfo: nil, repeats: true)
     }
     
-    func stopMove() {
+    func pauseMove() {
         self.moveTimer?.invalidate()
         self.moveTimer = nil
     }
     
+    func stopMove() {
+        self.moveTimer?.invalidate()
+        self.moveTimer = nil
+        
+        self.isDoingTimer?.invalidate()
+        self.isDoingTimer = nil
+    }
     
-    public func multipleTouchInteraction() {
+    /*
+     @objc func sleepingState() { // 자면 5초당 피로도 delta만큼 씩 증가
+         self.updateSleepiness(delta: self.sleepHealingValue)
+         if (self.sleepiness < 2) {
+             self.sleepTimer!.invalidate()
+             self.sleepTimer = nil
+             self.isDoing = false
+             self.button.imageView?.stopAnimating()
+             if (self.isSelected == true){
+                 self.buttonView1!.alpha = 1
+                 self.buttonView2!.alpha = 1
+             }
+         }
+         print(self.sleepiness)
+     }
+
+     */
+    
+    public func multipleTouchInteraction(touchCount: Int) -> Int {
         if (self.isDoing) {
-            return
+            print(touchCount)
+            if (self.sleepTimer != nil) && (touchCount > 12) { // it is sleeping now.... 격렬하게 터치해야 깨워짐
+                print("don't wake me up --")
+                self.sleepTimer!.invalidate()
+                self.sleepTimer = nil
+                self.isDoing = false
+                self.button.imageView?.stopAnimating()
+                if (self.isSelected == true){
+                    self.buttonView1!.alpha = 1
+                    self.buttonView2!.alpha = 1
+                }
+                return 0
+            }
+            return touchCount
         }
         
         var imageListArray: [UIImage] = []
@@ -188,6 +258,7 @@ class Tamagotchi {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5 , execute: {
             self.moveTimer?.fire()
         })
+        return 0
     }
 
     public func updateAge(delta: Int) {

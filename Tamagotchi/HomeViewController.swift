@@ -17,6 +17,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var dungList: [UIImageView] = []
     let dungMakeTime: Float = 20
     
+    public var returnDataFromPopUpView : String?
+    
     //전체 펫 View
     @IBOutlet weak var petView: UIView!
     
@@ -68,6 +70,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     // tamagotchi inforamtion
     var tamaInfo: [String] = ["", "0", "0", "0", "0"]
+    
+    
+    // food and play ellement array (have to change)
+    public let foodEllement = ["쌀밥":1, "잡곡밥":2, "건강식":10]
+    public let playEllement = ["공놀이":1, "그네태우기":2, "부메랑물어오기":10]
     
     
     //Tamagotchi
@@ -126,27 +133,36 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        // load saved Tamagotchis data
+//        loadTamagotchiData()
         loadSampleTamagotchiData()
+        
+        // Label and Programs initiating
         statusLabels = [nameT, ageT, hungerT, cleanlinessT, closenessT]
         statusProgs = [ageP, hungerP, cleanlinessP]
         
+        // Tamagotchi move randomly start
         allTamagotchiMoveRandomly()
 
+        // Tamagotchi status change by time start
         for i in 0..<tamas.count {
             AutomaticStatusChange(tama: tamas[i]!)
         }
+        
+        // Tamagotchis make dung by time start
         AutomaticMakeDung()
         
+        // setting array for collection (도감 setting)
         for species in tamaIndex.keys{
             //indexImage.append(species + "gray")
             indexImage.append("babygray")
             indexName.append(species)
         }
+        
+        // setting Collection View delegate and datasource by self
         indexCollectionView.delegate = self
         indexCollectionView.dataSource = self
-        
-//        loadTamagotchiData()
-        
 
         
         // add move gesture
@@ -157,7 +173,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         tamaButton5.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(dragTama5(gesture:))))
         
         
-        // every 5 seconds, intilaizing button touch count
+        // every 5 seconds, intilaizing button touch count for touch interaction
         Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(touchCountInitialize), userInfo: nil, repeats: true)
     }
     
@@ -170,6 +186,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //tama3, tama4, tama5
         
         appendNotNilTamagotchiIntoTamas()
+        tama1!.updateSleepiness(delta: 100)
+        tama1!.updateHunger(delta: 100)
     }
  
     
@@ -306,6 +324,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             tama.updateHunger(delta: 1)
             tama.updateCleanliness(delta: -1)
             tama.updateCloseness(delta: -1)
+            tama.updateSleepiness(delta: 1)
         })
     }
     
@@ -336,7 +355,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             clickTamaButton(tama: tama)
             self.tamaButton1TouchCount += 1
             if (self.tamaButton1TouchCount > touchInteractionCount) {
-                tama.multipleTouchInteraction()
+                self.tamaButton1TouchCount = tama.multipleTouchInteraction(touchCount: self.tamaButton1TouchCount)
             }
         }
     }
@@ -345,7 +364,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             clickTamaButton(tama: tama)
             self.tamaButton2TouchCount += 1
             if (self.tamaButton2TouchCount > touchInteractionCount) {
-                tama.multipleTouchInteraction()
+                self.tamaButton1TouchCount = tama.multipleTouchInteraction(touchCount: self.tamaButton2TouchCount)
             }
         }
     }
@@ -354,7 +373,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             clickTamaButton(tama: tama)
             self.tamaButton3TouchCount += 1
             if (self.tamaButton3TouchCount > touchInteractionCount) {
-                tama.multipleTouchInteraction()
+                self.tamaButton1TouchCount = tama.multipleTouchInteraction(touchCount: self.tamaButton3TouchCount)
             }
         }
     }
@@ -363,7 +382,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             clickTamaButton(tama: tama)
             self.tamaButton4TouchCount += 1
             if (self.tamaButton4TouchCount > touchInteractionCount) {
-                tama.multipleTouchInteraction()
+                self.tamaButton1TouchCount = tama.multipleTouchInteraction(touchCount: self.tamaButton4TouchCount)
             }
         }
     }
@@ -372,7 +391,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             clickTamaButton(tama: tama)
             self.tamaButton5TouchCount += 1
             if (self.tamaButton5TouchCount > touchInteractionCount) {
-                tama.multipleTouchInteraction()
+                self.tamaButton1TouchCount = tama.multipleTouchInteraction(touchCount: self.tamaButton5TouchCount)
             }
         }
     }
@@ -394,7 +413,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             buttonListView1.alpha = 0.6
             buttonListView2.alpha = 0.6
         }
-        selectedTama!.stopMove()
+        selectedTama!.pauseMove()
     }
     
     func tamaButtonReset() {
@@ -411,22 +430,44 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     /***  Functions for Action Buttons  ***/
     
     @IBAction func eatAction(_ sender: UIButton) {
-        
         if let tama = selectedTama, !tama.isDoing {
-            // have to insert status change function
-            tama.updateHunger(delta: -10)
+            // popup view 선언
+            let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "eatPopUpView") as! ListPopUpViewController
             
-            // change image looks like animation
-            tama.animationStart(action: "eat", view1: buttonListView1, view2: buttonListView2)
+            // set PopUpView element
+            popUpView.showEllement = self.foodEllement
+            popUpView.tama = tama
+            popUpView.buttonListView1 = buttonListView1
+            popUpView.buttonListView2 = buttonListView2
+            
+            // eat action
+            popUpView.action = "eat"
+            
+            // appear PopUp
+            self.addChildViewController(popUpView)
+            popUpView.view.frame = self.view.frame
+            self.view.addSubview(popUpView.view)
         }
     }
     
     @IBAction func playAction(_ sender: UIButton) {
         if let tama = selectedTama, (!tama.isDoing) {
-            // have to insert status change function
-            tama.updateCloseness(delta: 10)
-            // change image looks like animation
-            tama.animationStart(action: "play", view1: buttonListView1, view2: buttonListView2)
+            // popup view 선언
+            let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "eatPopUpView") as! ListPopUpViewController
+            
+            // set PopUpView element
+            popUpView.showEllement = self.playEllement
+            popUpView.tama = tama
+            popUpView.buttonListView1 = buttonListView1
+            popUpView.buttonListView2 = buttonListView2
+            
+            // play action
+            popUpView.action = "play"
+            
+            // appear PopUp
+            self.addChildViewController(popUpView)
+            popUpView.view.frame = self.view.frame
+            self.view.addSubview(popUpView.view)
         }
     }
 
@@ -434,7 +475,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if let tama = selectedTama, !(tama.isDoing) {
             // have to insert status change function
             tama.updateCleanliness(delta: 10)
-            
             // change image looks like animation
             tama.animationStart(action: "wash", view1: buttonListView1, view2: buttonListView2)
         }
@@ -448,11 +488,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBAction func sleepAction(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
-            // have to insert status change function
-            tama.updateSleepiness(delta: -10)
-            
-            // change image looks like animation
-            tama.animationStart(action: "sleep", view1: buttonListView1, view2: buttonListView2)
+            if (tama.sleepiness > 90) { // tama wants to sleep
+                
+                // change image looks like animation
+                tama.animationStart(action: "sleep", view1: buttonListView1, view2: buttonListView2)
+            }
         }
     }
     

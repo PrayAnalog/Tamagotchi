@@ -13,6 +13,8 @@
 		CE33D1101F20E5EA000D3886 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = CE33D10C1F20E5EA000D3886 /* GameScene.sks */; };
 		CE33D1111F20E5EA000D3886 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE33D10D1F20E5EA000D3886 /* GameScene.swift */; };
 		CE33D1121F20E5EA000D3886 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE33D10E1F20E5EA000D3886 /* GameViewController.swift */; };
+		CE5AE29F1F23B46600A1909A /* ListPopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AE29E1F23B46600A1909A /* ListPopUpViewController.swift */; };
+		CE5AE2A11F23BA1400A1909A /* ListPopUpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5AE2A01F23BA1400A1909A /* ListPopUpTableViewCell.swift */; };
 		CECDD3181F20AA3200B99265 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECDD3171F20AA3200B99265 /* AppDelegate.swift */; };
 		CECDD31A1F20AA3200B99265 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECDD3191F20AA3200B99265 /* ViewController.swift */; };
 		CECDD31D1F20AA3200B99265 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CECDD31B1F20AA3200B99265 /* Main.storyboard */; };
@@ -40,6 +42,8 @@
 		CE33D10C1F20E5EA000D3886 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		CE33D10D1F20E5EA000D3886 /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		CE33D10E1F20E5EA000D3886 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		CE5AE29E1F23B46600A1909A /* ListPopUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPopUpViewController.swift; sourceTree = "<group>"; };
+		CE5AE2A01F23BA1400A1909A /* ListPopUpTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPopUpTableViewCell.swift; sourceTree = "<group>"; };
 		CECDD3141F20AA3200B99265 /* Tamagotchi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tamagotchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CECDD3171F20AA3200B99265 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CECDD3191F20AA3200B99265 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +119,8 @@
 				CECDD31E1F20AA3200B99265 /* Assets.xcassets */,
 				CECDD3201F20AA3200B99265 /* LaunchScreen.storyboard */,
 				CECDD3231F20AA3200B99265 /* Info.plist */,
+				CE5AE29E1F23B46600A1909A /* ListPopUpViewController.swift */,
+				CE5AE2A01F23BA1400A1909A /* ListPopUpTableViewCell.swift */,
 			);
 			path = Tamagotchi;
 			sourceTree = "<group>";
@@ -239,8 +245,10 @@
 				CECDD31A1F20AA3200B99265 /* ViewController.swift in Sources */,
 				CECDD3181F20AA3200B99265 /* AppDelegate.swift in Sources */,
 				CE33D1111F20E5EA000D3886 /* GameScene.swift in Sources */,
+				CE5AE29F1F23B46600A1909A /* ListPopUpViewController.swift in Sources */,
 				CE2121821F21D17200162FB5 /* Tamagotchi.swift in Sources */,
 				CEF2A4C91F2376A0006AFFB4 /* CustomCell.swift in Sources */,
+				CE5AE2A11F23BA1400A1909A /* ListPopUpTableViewCell.swift in Sources */,
 				CECDD3381F20C04E00B99265 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
