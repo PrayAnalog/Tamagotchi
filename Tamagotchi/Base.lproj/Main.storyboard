@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -15,6 +13,10 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Tamagotchi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uBM-z7-UvM"/>
+                        <viewControllerLayoutGuide type="bottom" id="KNc-9T-5Jr"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -43,6 +45,10 @@
         <scene sceneID="EsK-Xo-Uri">
             <objects>
                 <viewController id="4t7-GV-54R" customClass="HomeViewController" customModule="Tamagotchi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xvk-Ux-2Jt"/>
+                        <viewControllerLayoutGuide type="bottom" id="s5o-Kt-LFx"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="zZX-gP-hwZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -326,7 +332,7 @@
                                     <segue destination="lvK-4r-PPD" kind="modal" id="6zJ-nv-lGI"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="ful-Rj-oZJ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" id="ful-Rj-oZJ">
                                 <rect key="frame" x="304" y="583" width="65" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="친구만나기">
@@ -336,7 +342,7 @@
                                     <action selector="inviteFriend:" destination="4t7-GV-54R" eventType="touchUpInside" id="0oJ-aw-1di"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="none" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="0o1-pt-N4D">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="none" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="0o1-pt-N4D">
                                 <rect key="frame" x="36" y="576" width="252" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -641,12 +647,15 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="scf-VM-U4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1650" y="198"/>
-
         </scene>
         <!--Game View Controller-->
         <scene sceneID="0jM-g7-ptR">
             <objects>
                 <viewController storyboardIdentifier="game0" id="lvK-4r-PPD" customClass="GameViewController" customModule="Tamagotchi" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="owD-Qi-qOC"/>
+                        <viewControllerLayoutGuide type="bottom" id="bc0-mo-a0c"/>
+                    </layoutGuides>
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="EdU-q5-o69" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -673,6 +682,9 @@
         <image name="cure" width="64" height="64"/>
         <image name="eat" width="64" height="64"/>
         <image name="game0" width="64" height="64"/>
+        <image name="heart" width="120" height="117"/>
+        <image name="heartLeft" width="160" height="158"/>
+        <image name="heartRight" width="156" height="154"/>
         <image name="love" width="64" height="64"/>
         <image name="mainDefault" width="162" height="288"/>
         <image name="play" width="64" height="64"/>
@@ -682,11 +694,6 @@
         <image name="touchToStartDefault" width="300" height="300"/>
         <image name="wash" width="128" height="128"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
-    </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="PoW-lQ-PpI"/>
     </inferredMetricsTieBreakers>

@@ -22,7 +22,7 @@ class MCManager: NSObject, MCSessionDelegate {
     
     override init() {
         super.init()
-    
+        
         peerID = nil
         session = nil
         browser = nil
@@ -54,7 +54,7 @@ class MCManager: NSObject, MCSessionDelegate {
     // The following methods do nothing, but the MCSessionDelegate protocol
     // requires that we implement them.
     func session(_ session: MCSession, didReceive data: Data,
-    fromPeer peerID: MCPeerID)  {
+                 fromPeer peerID: MCPeerID)  {
         let dict: NSDictionary = [
             "data": data,
             "peerID": peerID
@@ -65,19 +65,19 @@ class MCManager: NSObject, MCSessionDelegate {
     }
     
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress)  {
-    // Called when a peer starts sending a file to us
+        // Called when a peer starts sending a file to us
     }
     
     func session(_ session: MCSession, didFinishReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, at localURL: URL, withError error: Error?)  {
-    // Called when a file has finished transferring from another peer
+        // Called when a file has finished transferring from another peer
     }
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID)  {
-    // Called when a peer establishes a stream with us
+        // Called when a peer establishes a stream with us
     }
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState)  {
-    // Called when a connected peer changes state (for example, goes offline)
+        // Called when a connected peer changes state (for example, goes offline)
     }
     
 }
