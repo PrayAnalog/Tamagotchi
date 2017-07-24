@@ -41,6 +41,14 @@ class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
     @IBOutlet weak var tamaButton4: UIButton!
     @IBOutlet weak var tamaButton5: UIButton!
     
+    // touch interaction을 위해 몇 번 눌렸는지 check할 값. 5초에 0으로 초기화됨
+    public let touchInteractionCount: Int = 4   // 5초 안에 몇 번 눌러야할지 설정한 값
+    public var tamaButton1TouchCount: Int = 0
+    public var tamaButton2TouchCount: Int = 0
+    public var tamaButton3TouchCount: Int = 0
+    public var tamaButton4TouchCount: Int = 0
+    public var tamaButton5TouchCount: Int = 0
+    
     //status Lables
     @IBOutlet weak var nameT: UILabel!
     @IBOutlet weak var ageT: UILabel!
@@ -49,17 +57,32 @@ class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
     @IBOutlet weak var closenessT: UILabel!
     var statusLabels: [UILabel]?
     
+    //Progress bars
     @IBOutlet weak var ageP: UIProgressView!
     @IBOutlet weak var hungerP: UIProgressView!
     @IBOutlet weak var cleanlinessP: UIProgressView!
     var statusProgs: [UIProgressView]?
-    
-    
+
     //status view
     @IBOutlet weak var statusView: UIView!
     
+    //index view
+    @IBOutlet weak var indexView: UIView!
+    @IBOutlet weak var indexCollectionView: UICollectionView!
+    var indexImage: [String] = []
+    var indexName: [String] = []
+    let itemsPerRow: CGFloat = 3
+    
+    //Index of pet
+    let tamaIndex = ["baby": false, "pet1": true, "pet2": false, "pet3": false, "pet4": true, "pet5": false, "pet6": true]
+    
     // tamagotchi inforamtion
     var tamaInfo: [String] = ["", "0", "0", "0", "0"]
+    
+    
+    // food and play ellement array (have to change)
+    public let foodEllement = ["쌀밥":1, "잡곡밥":2, "건강식":10]
+    public let playEllement = ["공놀이":1, "그네태우기":2, "부메랑물어오기":10]
     
     
     //Tamagotchi
@@ -140,6 +163,7 @@ class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
         
         var tamagotchiArray: [Any] = []
         
+        tamagotchiArray.append(["Dung":dungList.count])
         if (tama1 != nil) {
             tamagotchiArray.append(tama1!.getData())
         }
@@ -180,20 +204,37 @@ class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
             
             for item in tamagotchiArray {
                 print(item)
+                // check dung count and paint them all
+                if let dungCount = item["Dung"] {
+                    for _ in 0..<(dungCount as! Int) {
+                        let randomSize = arc4random_uniform(15) + 30
+                        let randomX = arc4random_uniform(300)
+                        let randomY = arc4random_uniform(250)
+                        
+                        let dungImageView = UIImageView(frame: self.CGRectMake(CGFloat(randomX), CGFloat(randomY), CGFloat(randomSize), CGFloat(randomSize)))
+                        dungImageView.image = self.dungImage!
+                        dungImageView.backgroundColor = UIColor.clear
+                        
+                        self.dungList.append(dungImageView)
+                        self.petView.addSubview(dungImageView)
+                        self.petView.sendSubview(toBack: dungImageView)
+                    }
+                    continue
+                }
                 if (tama1 == nil) {
                     tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton1, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
                 else if (tama2 == nil) {
-                    tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton2, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
+                    tama2 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton2, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
                 else if (tama3 == nil) {
-                    tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton3, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
+                    tama3 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton3, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
                 else if (tama4 == nil) {
-                    tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton4, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
+                    tama4 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton4, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
                 else if (tama5 == nil) {
-                    tama1 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton5, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
+                    tama5 = Tamagotchi(name: item["name"] as! String, gender: item["gender"] as! String, button: tamaButton5, age: item["age"] as! Int, hunger: item["hunger"] as! Int, cleanliness: item["cleanliness"] as! Int, closeness: item["closeness"] as! Int, health: item["health"] as! Int, sleepiness: item["sleepiness"] as! Int, species: item["species"] as! String, isDoing: false)
                 }
             }
             
@@ -211,7 +252,25 @@ class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
     }
     
     
-    
+    // make all tamagotchi movement randomly
+    func allTamagotchiStopMove() {
+        if (tama1 != nil) {
+            tama1!.stopMove()
+        }
+        if (tama2 != nil) {
+            tama2!.stopMove()
+        }
+        if (tama3 != nil) {
+            tama3!.stopMove()
+        }
+        if (tama4 != nil) {
+            tama4!.stopMove()
+        }
+        if (tama5 != nil) {
+            tama5!.stopMove()
+        }
+        
+    }
     // make all tamagotchi movement randomly
     func allTamagotchiMoveRandomly() {
         if (tama1 != nil) {
@@ -318,40 +377,58 @@ class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
             buttonListView1.alpha = 0.6
             buttonListView2.alpha = 0.6
         }
-        
-        selectedTama!.stopMove()
+        selectedTama!.pauseMove()
     }
     
     func tamaButtonReset() {
-            
         for i in 0..<tamas.count {
             tamas[i]!.isSelected = false
             tamas[i]!.setBackground()
-
         }
     }
     
     
-    
-    
     /***  Functions for Action Buttons  ***/
+    
     @IBAction func eatAction(_ sender: UIButton) {
-        
         if let tama = selectedTama, !tama.isDoing {
-            // have to insert status change function
-            tama.updateHunger(delta: -10)
+            // popup view 선언
+            let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListPopUpView") as! ListPopUpViewController
             
-            // change image looks like animation
-            tama.animationStart(action: "eat", view1: buttonListView1, view2: buttonListView2)
+            // set PopUpView element
+            popUpView.showEllement = self.foodEllement
+            popUpView.tama = tama
+            popUpView.buttonListView1 = buttonListView1
+            popUpView.buttonListView2 = buttonListView2
+            
+            // eat action
+            popUpView.action = "eat"
+            
+            // appear PopUp
+            self.addChildViewController(popUpView)
+            popUpView.view.frame = self.view.frame
+            self.view.addSubview(popUpView.view)
         }
     }
     
     @IBAction func playAction(_ sender: UIButton) {
         if let tama = selectedTama, (!tama.isDoing) {
-            // have to insert status change function
-            tama.updateCloseness(delta: 10)
-            // change image looks like animation
-            tama.animationStart(action: "play", view1: buttonListView1, view2: buttonListView2)
+            // popup view 선언
+            let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListPopUpView") as! ListPopUpViewController
+            
+            // set PopUpView element
+            popUpView.showEllement = self.playEllement
+            popUpView.tama = tama
+            popUpView.buttonListView1 = buttonListView1
+            popUpView.buttonListView2 = buttonListView2
+            
+            // play action
+            popUpView.action = "play"
+            
+            // appear PopUp
+            self.addChildViewController(popUpView)
+            popUpView.view.frame = self.view.frame
+            self.view.addSubview(popUpView.view)
         }
     }
 
@@ -373,29 +450,58 @@ class HomeViewController: UIViewController, MCBrowserViewControllerDelegate {
     
     @IBAction func sleepAction(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
-            // have to insert status change function
-            tama.updateSleepiness(delta: -10)
-            
-            // change image looks like animation
-            tama.animationStart(action: "sleep", view1: buttonListView1, view2: buttonListView2)
+            if (tama.sleepiness > 90) { // tama wants to sleep
+                
+                // change image looks like animation
+                tama.animationStart(action: "sleep", view1: buttonListView1, view2: buttonListView2)
+            } else {
+                // 안졸리다는 action popup view 선언
+                let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NoticePopUpView") as! NoticePopUpViewController
+                
+                // clean animation
+                popUpView.animation = "sayno"
+                popUpView.species = tama.species
+                
+                // appear PopUp
+                self.addChildViewController(popUpView)
+                popUpView.view.frame = self.view.frame
+                self.view.addSubview(popUpView.view)
+
+            }
         }
     }
     
     @IBAction func cureAction(_ sender: UIButton) {
         if let tama = selectedTama, !(tama.isDoing) {
-            // have to insert status change function
-            tama.updateHealth(delta: 50)
+            if (tama.health < 20) {
+                // have to insert status change function
+                tama.updateHealth(delta: 50)
+                
+                // change image looks like animation
+                tama.animationStart(action: "wash", view1: buttonListView1, view2: buttonListView2)
+            } else {
+                // 안아프다는 action popup view 선언
+                let popUpView = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "NoticePopUpView") as! NoticePopUpViewController
+                
+                // clean animation
+                popUpView.animation = "sayno"
+                popUpView.species = tama.species
+                
+                // appear PopUp
+                self.addChildViewController(popUpView)
+                popUpView.view.frame = self.view.frame
+                self.view.addSubview(popUpView.view)
+            }
             
-            // change image looks like animation
-            tama.animationStart(action: "wash", view1: buttonListView1, view2: buttonListView2)
         }
     }
     
-    @IBAction func loveAction(_ sender: UIButton) {
-    }
     
+    
+    
+    /*** function for status view ***/
     @IBAction func statusView(_ sender: UIButton) {
-        if let tama = selectedTama, !(tama.isDoing) {
+        if let tama = selectedTama {
             //view status
             tamaInfo = tama.getInfo()
             for i in 0..<tamaInfo.count{
