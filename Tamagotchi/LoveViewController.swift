@@ -7,16 +7,15 @@
 //
 
 import UIKit
-import CoreBluetooth
 
-class LoveViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class LoveViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     var tamas = [Tamagotchi?]()
     var tamaImages: [String] = []
     var tamaNames: [String] = []
     var selectedTama: Tamagotchi!
     
-    var itemsPerRow = 3
+    let itemsPerRow: CGFloat = 3
     
     @IBOutlet weak var selectButton: UIButton!
     @IBOutlet weak var selectView: UIView!
@@ -56,7 +55,8 @@ class LoveViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     
-    @IBAction func selectTama(_ sender: Any) {
+    
+    @IBAction func showSelectTama(_ sender: UIButton) {
         tamaImages = []
         for tama in tamas{
             if tama!.age > 10 {
@@ -81,18 +81,19 @@ class LoveViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCell2", for: indexPath) as! CustomCell2
-        cell.backgroundColor = UIColor.white
+        
         cell.name.text = tamaNames[indexPath.row]
         cell.image.image = UIImage(named: tamaImages[indexPath.row])
-        cell.image.frame = CGRectMake(10, 8, cell.frame.width - 10, cell.frame.width - 10)
+        cell.image.frame = CGRectMake(5, 5, cell.frame.width - 5, cell.frame.width - 5)
         cell.name.frame = CGRectMake(0, cell.frame.width, cell.frame.width, 15)
         cell.name.font = UIFont.systemFont(ofSize: 10.0)
+ 
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingSpace = 5 * (itemsPerRow + 1)
-        let availableWidth = Int(selectCollectionView.frame.width) - paddingSpace
+        let availableWidth = selectCollectionView.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
         
         return CGSize(width: widthPerItem, height: widthPerItem + 20)
